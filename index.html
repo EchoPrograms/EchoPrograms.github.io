@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="Stylesheets/home.css">
+        <script type="text/javascript">
+            var title = "Home"
+            var indexes = [];
+            for(var i=0; i < title.length * 2 + 1; i++)
+            {
+                if(i < title.length) {
+                    indexes.push(title.substring(i));
+                    
+                } else if (i == title.length) {
+                    indexes.push("\&\#65279;");
+                } else {
+                    indexes.push(title.substring(0, i - title.length));
+                }
+                console.log(i, indexes)
+            }  
+            var index = 0; 
+            setInterval(()=>{
+                document.querySelector('title').innerHTML = indexes[index % (indexes.length)]; 
+                index++
+            },350)
+        </script>    
+    </head>
+    <body>
+        <nav id="navbar">
+            <ul>
+                <a href="index.html" id="Home"><li>Home</li></a>
+                <a href="Html/projects.html"><li class="page">Projects</li></a>
+                <a href="Html/about.html"><li class="page">About</li></a>
+            </ul>
+        </nav>
+        <div id="bodyContainer">
+            <h1>About this website:</h1>
+            <p>This is a place for my projects and coding ventures.</p>
+        </div>
+    </body>
+</html>
