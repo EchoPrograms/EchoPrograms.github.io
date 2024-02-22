@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Toki Pona</title>
+		<link type="text/css" rel="stylesheet" href="index.css">
+	</head>
+	<body>
+		<center>
+			
+			
+				<label label="boxToki" id="boxTokiLabel">Write in symbols</label>
+			<input name="boxToki" id="boxToki" type="checkbox"><br>
+			<textarea id="textBox" ></textarea><br>
+			<label label="keyboardWord" id="keyboardWordLable">Keyboard in letters</label>
+			<input name="keyboardWord" id="keyboardWord" type="checkbox"><br>
+			
+			<table id="keyboard">
+				<tr>
+					<td class="frequent">li</td><td class="frequent">mi</td><td class="util"></td><td class="blank" id="change1">ali</td><td class="blank" id="change2">en</td><td class="blank" id="change3">ike</td><td class="util backspace">&#8592;</td>
+				</tr>
+				<tr>
+					<td class="frequent">e</td><td class="frequent">toki</td><td class="util"></td><td class="blank" id="change4">jan</td><td class="blank" id="change5">kama</td><td class="blank" id="change6">la</td><td class="util compound">-</td>
+				</tr>
+				<tr>
+					<td class="frequent">ni</td><td class="frequent">pona</td><td class="blank" id="change7">ma</td><td class="blank" id="change8">nimi</td><td class="blank" id="change9">o</td><td class="blank" id="change10">pi</td><td class="util"></td>
+				</tr>
+				<tr>
+					<td class="frequent">a</td><td class="frequent">ala</td><td class="blank" id="change11">sina</td><td class="blank" id="change12">tawa</td><td class="blank" id="change13">utala</td><td class="blank" id="change14">wile</td><td class="util"></td>
+				</tr>
+			</table>
+			<h1 id="fireFoxWarning">You can use the translate and find fields, but you cannot use the keyboard in firefox. Please switch browsers (This was developed in chrome, but other browsers should still work).</h1>
+			<br>
+<p>Enter Toki Pona (Ex: Mi Toki ma jAN):</p>
+			<input name="translate" id="translateField">
+			<button id="submitTranslate">Translate</button>
+			<p id="translateResult"></p>
+
+			<p> This sometimes doesn't return anything, even when there is an alternate meaning for a word, so refer to the images below or external sources if this doesn't work. (Data included from <a href="http://tokipona.org/compounds.txt">this</a> page)<br>
+			Enter simple English to find closely related Toki Pona (Ex: Open small one or):</p>
+			<input name="find" id="findField">
+			<button id="submitFind">Find</button>
+			<p id="findResult"></p>
+		</center>
+		<script src="index.js"></script>
+		<center>
+			<img src="tokiPona-1.jpg" width="45%">
+			<img src="tokiPona-2.jpg" width="45%">
+		</center>
+		<p>This is a version of <a href="https://github.com/timeopochin/tokiponakeyboard">timeopochin's</a> keyboard in the browser, as the one on github exclusive to moblie devices. I also added the two page langage summary and a word translator to make this a better learning resource. This only took me two days, so it might be a little buggy. You can report bugs to me on discord by DMing me: []Echo#0737 </p>
+	</body>	
+</html>

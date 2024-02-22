@@ -1,0 +1,12 @@
+#buttonContainer {
+	text-align: center;
+	margin-top: 20%;
+}
+#button {
+	background-color: red;
+	border: 3px double black;
+   border-radius: 4px;
+	padding: 40px;
+	font-size: 18px;
+	font-family: Cursive;
+}

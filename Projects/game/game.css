@@ -1,0 +1,33 @@
+#list {
+	display: none;
+	text-align: left;
+	position: absolute;
+}
+body 	{
+    text-align: center;
+}
+
+
+.siko{
+    text-align: center;
+}
+.hide{
+    visibility: hidden;
+}
+#youDied {
+    color: red;
+    text-align:center;
+    margin: auto;
+    font-size: 500%;
+    font-family: cursive;
+}
+#udied {
+    color: red;
+        color: red;
+    text-align:center;
+    font-size: 300%;
+    font-family: cursive;
+  
+}
+
+

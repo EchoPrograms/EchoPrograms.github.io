@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Game</title>
+	 
+  </head>
+	<ul id="list">
+	 	<li>crash</li>
+		<li>don't crash</li>
+		<li>don't crash please</li>
+		<li>sicko</li>
+		<li>reset</li>
+		<li>erase</li>
+		<li>dog</li>
+		<li>nothing</li>
+		<li>you are dumb</li>
+		<li>die</li>
+		<li>poop</li>
+		<li>oop</li>
+		<li>boom</li>
+		<li>element</li>
+		<li>parkour</li>
+		<li>trail</li>
+		<li>hello</li>
+		<li><b>There are more, but you will have <br>to find them yourself.</b></li>
+	</ul>
+  <body>
+    <link rel="stylesheet" href="game.css">
+    
+    <a href="../../Html/projects.html">
+      <button>back</button>
+    </a>
+    <div id="form">
+      <input type="text" id="textfield0" autofocus="on" value="" autocomplete="off">
+      <button id="submit" onclick="submited()">Submit</button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--audio for crabrave-->
+    <audio id="audio">
+      <source src="crab.mp3" type="audio/mpeg">
+    </audio>
+    <p id="namespace0"></p>
+    <h1 id="youDied"></h1>
+    <p id="uDied"></p>
+    <script>
+      //a button to enable siko mode
+      //a counter to store toggle values
+      var on = 0;
+      //the logic for flashing, and switching it on and off
+      function sikomode() {
+        var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D', '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC', '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399', '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933', '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+        function random(min, max) {
+          min = Math.ceil(min);
+          max = Math.floor(max);
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        var Loop = setInterval(() => {
+          if (on == 1) {
+            document.querySelector("body").style.backgroundColor = colorArray[random(0, colorArray.length)];
+            document.querySelector("body").style.color = colorArray[random(0, colorArray.length)];
+          }
+        }, 0.00001);
+        if (on == 0) {
+          on = 1;
+          console.log("on");
+        } else {
+          on = 0;
+          console.log("off");
+        }
+        //logic for the buttons to unlock  
+      }
+
+      function auto() {
+        document.querySelector(".siko").disabled = false;
+        document.querySelector(".siko").style.visibility = "visible";
+      }
+
+      function auto1() {
+        document.querySelector(".unlock2").disabled = false;
+        document.querySelector(".unlock2").style.visibility = "visible";
+      }
+      //extra function to play audio
+      function playAudio() {
+        var a = document.getElementById("audio");
+        a.play();
+      }
+    </script>
+    <!--siko mode enable buttons-->
+    <button class="siko hide" disabled="true" onclick="sikomode()">sicko mode</button>
+    <button class="unlock1 hide" disabled="true" onclick="auto1()">unlock siko unlock</button>
+    <button class="unlock2 hide" disabled="true" onclick="auto()">unlock siko</button>
+	 <script type="text/javascript" src="game.js"></script>
+  </body>
+</html>

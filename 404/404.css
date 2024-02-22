@@ -1,0 +1,46 @@
+.head{
+    text-align:center;
+}
+p.first{
+    text-align:center;
+    margin: 270px;
+}
+p{
+    text-align:center;
+}
+A {
+    text-decoration: none;
+    margin:auto;
+}
+h1 {
+   text-align: center;
+   background-color:#3687ff;
+   border-radius: 10px;
+   padding: 10px;
+}
+ul {
+    list-style-type: none;
+    background-color: aliceblue;
+    padding: 40px;
+    margin-top: 28%;
+}
+ul li {
+    display: inline;
+    padding-left: 30%;
+
+}
+body{
+    border: 5px solid grey;
+    border-radius: 10px;
+    font-family: sans-serif;
+    background-color:#e1f8f8;
+}
+p {
+    text-align: center;
+    font-size: 30;
+ 
+}
+html {
+    background: radial-gradient(circle, #00b5ff, #f9f9f9 50%, #8bdaff 50%, SkyBlue);
+    background-size: 40px 8px;
+}

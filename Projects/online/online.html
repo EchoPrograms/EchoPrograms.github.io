@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Commands</title>
+    </head>
+    <body>
+        <link rel="stylesheet" href="online.css">
+
+        <script>
+    //setup for the dance party
+            var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+            function random(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+
+    //check for special commands in the first line, and sets the other lines
+
+                   
+            function submited()
+            {   
+                
+                 //if statment checks for correct commands, else if statments tell what happens if the commands are correct in the first form line
+                if($('#textfield0').val() !== "crash" & $('#textfield0').val() !== "don't crash" & $('#textfield0').val() !== "don't crash please" & $('#textfield0').val() !== "siko"& $('#textfield0').val() !== "reset"& $('#textfield0').val() !== "erase"& $('#textfield0').val() !== "crabrave")
+                {
+                    var inputvalue0 = $('#textfield0').val();
+                    document.querySelector("#namespace0").innerHTML = inputvalue0;
+                }else if($('#textfield0').val() == "crash")
+                {
+                    [...Array(2**32-1)];
+                }else if($('#textfield0').val() == "don't crash")
+                {
+                    document.querySelector("#namespace0").innerHTML = "ok";
+                    setTimeout(() => {  document.querySelector("#namespace0").innerHTML = "just kidding >;l"; }, 3000);
+                    setTimeout(() => {  [...Array(2**32-1)]; }, 4350);
+                }else if($('#textfield0').val() == "don't crash please")
+                {
+                    document.querySelector("#namespace0").innerHTML = "ok, since you asked nicely...";
+                    setTimeout(() => {  document.querySelector("#namespace0").innerHTML = "i won't crash this...but"; }, 3000);
+                    setTimeout(() => {  var Loop = setInterval(() => {
+
+
+
+                        document.querySelector("body").style.backgroundColor = colorArray[random(0, colorArray.length)];
+                        document.querySelector("body").style.color = colorArray[random(0, colorArray.length)];
+                        
+
+
+                    }, 100)  
+                    document.querySelector("#namespace0").innerHTML = "DANCE PARTY";
+                    }, 4350);
+                   
+
+                }else if ($('#textfield0').val() == "siko")
+                {
+                	document.querySelector(".unlock1").disabled = false;
+                	document.querySelector(".unlock1").style.visibility = "visible";
+            	
+                }else if ($('#textfield0').val() == "reset")
+                {
+                	document.querySelector("body").style.backgroundColor = "white";
+                        document.querySelector("body").style.color = "black";
+                }else if ($('#textfield0').val() == "erase")
+                {
+                	document.querySelector("body").style.visibility = "hidden";
+                	document.querySelector(".unlock1").style.visibility = "hidden";
+                	document.querySelector(".unlock2").style.visibility = "hidden";
+                	document.querySelector(".siko").style.visibility = "hidden";
+                	document.body.style.cursor = 'none';
+                    
+                }else if ($('#textfield0').val() == "crabrave")
+                {
+                	playAudio();
+                    
+                }
+                //sets the 2nd and 3rd inputs 
+                var inputvalue1 = $('#textfield1').val();
+                document.querySelector("#namespace1").innerHTML = inputvalue1;
+                var inputvalue2 = $('#textfield2').val();
+                document.querySelector("#namespace2").innerHTML = inputvalue2;
+                return false;
+            }
+            
+        </script>
+        <a href="../../Html/projects.html"><button>back</button></a>
+        <!-- form to insert commands-->
+
+        <form onsubmit="return submited();">
+            <input type="text" id="textfield0" autofocus ><br>
+            
+            <input type="text" id="textfield1" autofocus >
+            <br>
+            <input type="text" id="textfield2" autofocus ><br>
+            <button type="submit">Submit</button>
+        </form>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <div><br><br><br><br><br><br><br>
+        <!-- the p tags in which text is displayed-->
+        <p id="namespace0">first input</p><br><br>
+        <p id="namespace1">second input</p><br><br>
+        <p id="namespace2">third input</p><br><br>
+        </div>
+        <!--audio for crabrave-->
+        <audio id="audio">
+            <source src="crab.mp3" type="audio/mpeg">
+        </audio>
+        <script>
+        //a button to enable siko mode
+            //a counter to store toggle values
+            var on = 0; 
+            //the logic for flashing, and switching it on and off
+            function sikomode()
+            {
+                var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+            function random(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            } 
+                var Loop = setInterval(() => {
+
+
+                        if(on == 1)
+                        {
+                            document.querySelector("body").style.backgroundColor = colorArray[random(0, colorArray.length)];
+                            document.querySelector("body").style.color = colorArray[random(0, colorArray.length)];
+                        }
+                        
+
+}, 0.00001);
+                if(on == 0){
+                	on = 1;
+                	console.log("on");
+                	
+                }else
+                {
+                	on = 0;
+                	console.log("off");
+
+                }
+            //logic for the buttons to unlock  
+               
+
+            }
+            function auto()
+            {
+                   document.querySelector(".siko").disabled = false;
+            	   document.querySelector(".siko").style.visibility = "visible";
+            	
+            }
+            function auto1()
+            {
+                   document.querySelector(".unlock2").disabled = false;
+                   document.querySelector(".unlock2").style.visibility = "visible";
+            	
+            }
+            //extra function to play audio
+            function playAudio()
+            {
+            	var a = document.getElementById("audio");
+            	a.play();
+            }
+        </script>
+        <!--siko mode enable buttons-->
+        <button class="siko hide" disabled="true" onclick="sikomode()">siko mode</button>
+        <button class="unlock1 hide" disabled="true"onclick="auto1()">unlock siko unlock</button>
+        <button class="unlock2 hide" disabled="true" onclick="auto()">unlock siko</button>
+        
+        
+        
+</body>
+</html>

@@ -1,0 +1,66 @@
+body {
+ text-align:center;
+ color: white;
+ background-color: black;
+ font-family: sans;
+}
+.buttons {
+	border: solid black 0px;
+	border-radius: 0px;
+	font-family: sans;
+	margin-right: 10px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+#alive {
+
+}
+#dead {
+	color: red;
+	display: none;
+}
+#deathHead {
+   font-size: 60px;
+}
+#deathmessage {
+	font-size: 50px;
+}
+#encounter {
+	display: none;
+}
+img {
+	border: solid 1px white;
+}
+.runTextBold {
+	animation-name: redoneText;
+  animation-duration: 1s;
+}
+@keyframes redoneText {
+  from {font-weight: bold;}
+  to {background-color: normal;}
+}
+@keyframes fadeToBlack {
+  from {color: green; border-color: green;}
+  to {color: black; border-color: black;}
+}
+.fadeToBlack {
+	animation-name: fadeToBlack;
+   animation-duration: 1.5s;
+}
+.tutorial {
+	text-align: left;
+	display: none;
+	border: 1px solid white;
+	width: 50%;
+	margin: auto;
+	margin-top: 50px;
+	padding: 20px;
+}
+li {
+	margin: 5px;
+}
+#secret {
+	display: none;
+
+}

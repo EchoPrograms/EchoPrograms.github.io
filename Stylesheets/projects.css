@@ -1,0 +1,58 @@
+body {
+    background-image: url("../Resources/programming.jpg");
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    backdrop-filter: blur(3px);
+    margin: 0px;
+}
+#navbar {
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    box-shadow: 0 0 6px 1px #333;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 26px;
+    margin-bottom: 20%;
+}
+li {
+    display: inline;
+}
+a#home {
+    
+    font-size: 40px;
+    
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+li.page {
+    margin-left: 10%;
+}
+div#bodyContainer {
+    background-color: #333;
+    width: 80%;
+    color: white;
+    box-shadow: 0 0 6px 1px #303030;
+    font-family: monospace;
+    font-size: 26px;
+    padding: 5%;
+}
+table {
+    font-size: 80%;
+    width: 100%;
+    border-collapse: collapse;
+    height: 50%;
+}
+th, td{
+    border: 1px solid grey;
+    padding: 6px;
+    text-align: center;
+}
+td {
+    font-size: 90%;
+}
+th{
+    font-size: 100%;
+}
