@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="../Stylesheets/about.css">
+        <script type="text/javascript">
+            var title = "About"
+            var indexes = [];
+            for(var i=0; i < title.length * 2 + 1; i++)
+            {
+                if(i < title.length) {
+                    indexes.push(title.substring(i));
+                    
+                } else if (i == title.length) {
+                    indexes.push("\&\#65279;");
+                } else {
+                    indexes.push(title.substring(0, i - title.length));
+                }
+            }  
+            var index = 0; 
+            setInterval(()=>{
+                document.querySelector('title').innerHTML = indexes[index % (indexes.length)]; 
+                index++
+            },350)
+        </script>
+    </head>
+    <body>
+        <nav id="navbar">
+            <ul>
+                <a href="../index.html" id="Home"><li>Home</li></a>
+                <a href="../Html/projects.html"><li class="page">Projects</li></a>
+                <a href="../Html/about.html"><li class="page">About</li></a>
+            </ul>
+        </nav>
+        <div id="bodyContainer">
+            <h1>About Me:</h1>
+            <p id="aboutText">I am a 14 year old who loves programming and all things computer. I have been programming for 8 years and have stuck with it. This is the revamp of my original website that was... interestingly styled.</p>
+        </div>
+    </body>
+</html>
