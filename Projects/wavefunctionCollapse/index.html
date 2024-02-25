@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>Wave Function Collapse</title>
+	</head>
+	<body>
+		<p>Dimensions: (can be slow/crash the canvas at larger sizes)</p>
+		<input id="size" value="20">
+		<p>Style: (better seen at larger sizes, may reqire you to zoom out)</p>
+		<select name="style" id="style" value="Square">
+		<option value="Noodles">Noodles</option>
+		<option value="DiagonalNoodles">Diagonal Noodles</option>
+		<option value="Melt">Melt</option>
+		<option value="Square">Square</option>
+		</select>
+		<br>
+		<button id="generate" onclick="generate()">Generate</button>
+		<script src="p5.js"></script>
+		<script src="./script.js"></script>
+		<style>
+			body {
+				background-color: rgb(150, 150, 150);
+			}
+		</style>
+	</body>
+</html>

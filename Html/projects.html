@@ -1,71 +1,112 @@
 <html>
-    <head>
-        <title>Home</title>
-        <link rel="stylesheet" href="../Stylesheets/projects.css">
-        <script type="text/javascript">
-            var title = "Projects"
-            var indexes = [];
-            for(var i=0; i < title.length * 2 + 1; i++)
-            {
-                if(i < title.length) {
-                    indexes.push(title.substring(i));
-                    
-                } else if (i == title.length) {
-                    indexes.push("\&\#65279;");
-                } else {
-                    indexes.push(title.substring(0, i - title.length));
-                }
-            }  
-            var index = 0; 
-            setInterval(()=>{
-                document.querySelector('title').innerHTML = indexes[index % (indexes.length)]; 
-                index++
-            },350)
-        </script>
-    </head>
-    <body>
-        <nav id="navbar">
-            <ul>
-                <a href="../index.html" id="Home"><li>Home</li></a>
-                <a href="../Html/projects.html"><li class="page">Projects</li></a>
-                <a href="../Html/about.html"><li class="page">About</li></a>
-            </ul>
-        </nav>
-		  <script>
-			fetch("https://websitemanager.bo-studios.repl.co/").then(data => data.text()).then((data)=>{document.getElementById("currentProject").innerHTML += data; console.log(data)});
-		  </script>
-        <div id="bodyContainer">
-				<h3>Current Project:</h3>
-				<p id="currentProject"></p>
-            <table>
-                <tbody><tr>
-                    <th>project</th><th>how to use</th><th>date</th>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="../Stylesheets/projects.css">
+    <script type="text/javascript">
+        var title = "Projects"
+        var indexes = [];
+        for (var i = 0; i < title.length * 2 + 1; i++) {
+            if (i < title.length) {
+                indexes.push(title.substring(i));
+
+            } else if (i == title.length) {
+                indexes.push("\&\#65279;");
+            } else {
+                indexes.push(title.substring(0, i - title.length));
+            }
+        }
+        var index = 0;
+        setInterval(() => {
+            document.querySelector('title').innerHTML = indexes[index % (indexes.length)];
+            index++
+        }, 350)
+    </script>
+</head>
+
+<body>
+    <nav id="navbar">
+        <ul>
+            <a href="../index.html" id="Home">
+                <li>Home</li>
+            </a>
+            <a href="../Html/projects.html">
+                <li class="page">Projects</li>
+            </a>
+            <a href="../Html/about.html">
+                <li class="page">About</li>
+            </a>
+        </ul>
+    </nav>
+    <script>
+        fetch("https://websitemanager.bo-studios.repl.co/").then(data => data.text()).then((data) => { document.getElementById("currentProject").innerHTML += data; console.log(data) });
+    </script>
+    <div id="bodyContainer">
+        <h3>Current Project:</h3>
+        <p id="currentProject"></p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>project</th>
+                    <th>description</th>
+                    <th>date</th>
                 </tr>
                 <tr>
-                    <td><a href="../Projects/online/online.html">commands test</a></td><td>Enter commands in the first box and submit to see what happens. <br>Currently only has the commands, crabrave, erase, reset, crash, don't crash, WARNING INCLUDES FLASHING LIGHTS: don't crash please, siko.</td><td>4/19/2021</td>
+                    <td><a href="../Projects/online/online.html">commands test</a></td>
+                    <td>Enter commands in the first box and submit to see what happens. <br>Currently only has the
+                        commands, crabrave, erase, reset, crash, don't crash, WARNING INCLUDES FLASHING LIGHTS: don't
+                        crash please, siko.</td>
+                    <td>4/19/2021</td>
                 </tr>
                 <tr>
-                    <td><a href="../Projects/game/game.html">commands game</a></td><td>Enter commands in the box and submit to see what happens.</td><td>4/19/2021</td>
+                    <td><a href="../Projects/game/game.html">commands game</a></td>
+                    <td>Enter commands in the box and submit to see what happens.</td>
+                    <td>4/19/2021</td>
                 </tr>
-                   <tr>
-                    <td><a href="../Projects/ButtonBoom/index.html">Don't Touch The Button</a></td><td>Like actually, don't</td><td>2/18/2022</td>
+                <tr>
+                    <td><a href="../Projects/ButtonBoom/index.html">Don't Touch The Button</a></td>
+                    <td>Like actually, don't</td>
+                    <td>2/18/2022</td>
                 </tr>
-                      <tr>
-                    <td><a href="../Projects/teach site/index.html">Color changing thing</a></td><td>click the words! </td><td>4/6/2022</td>
+                <tr>
+                    <td><a href="../Projects/teach site/index.html">Color changing thing</a></td>
+                    <td>click the words! </td>
+                    <td>4/6/2022</td>
                 </tr>
-                   <tr>
-                    <td><a href="../Projects/Question Answer/index.html">CSS animation</a></td><td>Click to change the points!</td><td>4/11/2022</td>
+                <tr>
+                    <td><a href="../Projects/QuestionAnswer/index.html">CSS animation</a></td>
+                    <td>Click to change the points!</td>
+                    <td>4/11/2022</td>
                 </tr>
-                   <tr>
-                    <td><a href="../Projects/mid grehy/index.html">Compare Color</a></td><td>Select two colors, then click enter. It will return the hex code of the average color</td><td>5/18/2022</td>
+                <tr>
+                    <td></td>
+                    <td><b>WARNING: EVERYTHING BEFORE THIS IS ABSOLUTE TRASH</b></td>
+                    <td></td>
                 </tr>
-                   <tr>
-                    <td><a href="../Projects/Backrooms Text Project/Mainmenu/index.html">The Backrooms</a></td><td>Explore the backrooms</td><td>4/29/2022</td>
+                <tr>
+                    <td><a href="../Projects/BackroomsTextProject/Mainmenu/index.html">The Backrooms</a></td>
+                    <td>Explore the backrooms</td>
+                    <td>4/29/2022</td>
                 </tr>
-                    <tr>
-                    <td><a href="../Projects/Toki Pona/index.html">Toki Pona Keyboard</a></td><td>Use toki pona symbols in the web!</td><td>11/30/2022</td>
+                <tr>
+                    <td><a href="../Projects/TokiPona/index.html">Toki Pona Keyboard</a></td>
+                    <td>Use toki pona symbols in the web!</td>
+                    <td>11/30/2022</td>
                 </tr>
-            </tbody></table>           
-        </div>
-    </body>
+                <tr>
+                    <td><a href="../Projects/sandSim/index.html">Sand Simulation</a></td>
+                    <td>a simple sand simulation</td>
+                    <td>2/24/2024</td>
+                </tr>
+                <tr>
+                    <td><a href="../Projects/wavefunctionCollapse/index.html">Wavefunction Collapse</a></td>
+                    <td>A small wave function collapse algorithm demonstration</td>
+                    <td>2/24/2024</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+
 </html>
