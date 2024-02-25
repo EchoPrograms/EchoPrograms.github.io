@@ -49,10 +49,15 @@ th, td{
     border: 1px solid grey;
     padding: 6px;
     text-align: center;
+    color: #FFF;
 }
 td {
     font-size: 90%;
 }
 th{
     font-size: 100%;
+}
+#githubLink {
+    text-decoration: underline;
+    color: #ff6715;
 }
