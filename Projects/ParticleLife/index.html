@@ -6,7 +6,11 @@
 		<p id="fps"></p>
 		<div class="rulesContainer">
 			<p>Starting particle distance (lower = more particles):</p>
-			<input type="range" min="15" max="40" value="20" class="slider" id="startingDist">
+			<input type="range" min="15" max="40" value="18" class="slider" id="startingDist"> <span id="particlePrediction"></span>
+			<br>
+			<p>Friction Half Life (lower = more friction):</p>
+			<input type="number" min="0" max="1" value="0.02" id="frictionHalfLife">
+			<br>
 			<table id="attractionTable">
 				<tr>  <th></th> <th>Red</th> <th>Green</th> <th>Blue</th> <th>Purple</th> </tr>
 				<tr>  <th>Red</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
@@ -14,6 +18,13 @@
 				<tr>  <th>Blue</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
 				<tr>  <th>Purple</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
 			</table>
+			<button id="random" onclick="random()" type="button">Random</button> 
+			<br>
+			<input id="presetName">
+			<button id="savePreset" onclick="savePreset()" type="button">Save Preset</button> 
+			<button id="loadPreset" onclick="loadPreset()" type="button">Load Preset</button> 
+			<p id="presetStatus"></p>
+			<p id="presetList"></p>
 			<button onclick="start()" id="start">Start</button>
 		</div>
 		<canvas id="canvas" width="1000" height="650"></canvas>

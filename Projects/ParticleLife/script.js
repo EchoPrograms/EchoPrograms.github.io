@@ -11,7 +11,6 @@ var subLevelKeys = Object.keys(interactionMatrix[topLevelKeys[0]])
 setTableDefaults()
 
 function setTableDefaults() {
-	interactionMatrix = JSON.parse(localStorage.getItem("interactionMatrix")) ?? interactionMatrix
 	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
 		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
 			attractionTable.childNodes[i].childNodes[k].childNodes[0].value = interactionMatrix[topLevelKeys[i/2 - 1]][subLevelKeys[(k - 1) / 2 - 1]]
@@ -25,12 +24,53 @@ function generateInteractionMatrix() {
 			interactionMatrix[topLevelKeys[i/2 - 1]][subLevelKeys[(k - 1) / 2 - 1]] = attractionTable.childNodes[i].childNodes[k].childNodes[0].value 
 		}
 	}
-	localStorage.setItem("interactionMatrix", JSON.stringify(interactionMatrix))
 }
+var presetStatus = document.getElementById('presetStatus');
+var presetList = localStorage.getItem('presetList');
+if(presetList == null) {
+	presetList = "Presets:<br>"
+}
+var presetListDisplay = document.getElementById('presetList');
+presetListDisplay.innerHTML = presetList;
+function savePreset() {
+	var name = document.getElementById('presetName').value
+	generateInteractionMatrix()
+	localStorage.setItem("interactionMatrix-"+name, JSON.stringify(interactionMatrix))
+	localStorage.setItem("friction-"+name, frictionHalfLife)
+	localStorage.setItem("particleDistance-"+name, startingSpace)
+	presetStatus.innerHTML = "Preset \"" + name + "\" saved";
+	presetList = presetList + "<br>" + name;
+	localStorage.setItem('presetList', presetList);
+	presetListDisplay.innerHTML = presetList;
+}
+function loadPreset() {
+	var name = document.getElementById('presetName').value
+	if(localStorage.getItem("interactionMatrix-" + name) == null) {
+		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
+	} else {
+		interactionMatrix = JSON.parse(localStorage.getItem("interactionMatrix-"+name)) ?? interactionMatrix
+		frictionHalfLife = localStorage.getItem("friction-"+name)
+		startingSpace = parseInt(localStorage.getItem("particleDistance-"+name))
+		console.log(startingSpace)
+		presetStatus.innerHTML = "Preset \"" + name + "\" loaded";
+		document.getElementById("startingDist").value = parseInt(startingSpace);
+		document.getElementById("frictionHalfLife").value = frictionHalfLife;
+		setTableDefaults();
+	}
+}
+function random() {
+	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
+		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
+			interactionMatrix[topLevelKeys[i/2 - 1]][subLevelKeys[(k - 1) / 2 - 1]] = Math.floor(Math.random() * 40 - 20)
+		}
+	}
+	setTableDefaults();
+}
+
 
 var particles = [];
 var running = false;
-var startingSpace = 20;
+var startingSpace = 18;
 var particleSize = 2;
 var colorMapping = {
 	red: "#ff0000",
@@ -44,7 +84,7 @@ var yOffset = 0;
 
 var simDistance = 50;
 
-var frictionHalfLife = 0.04
+var frictionHalfLife = 0.02
 var dt = 0.02	
 var frictionFactor = Math.pow(0.5, dt / frictionHalfLife)
 
@@ -105,8 +145,10 @@ sizeSlider.oninput = () => {
 
 
 var startingSlider = document.getElementById("startingDist");
+var particlePrediction = document.getElementById("particlePrediction");
 startingSlider.oninput = () => {
 	startingSpace = parseInt(startingSlider.value)
+	particlePrediction.innerHTML = "Particles: " + Math.floor((width / startingSpace) * (height / startingSpace))
 }
 
 //particles.forEach((a)=>{a.velocity = { x: (Math.random() - 0.5) * 50 , y: (Math.random() - 0.5) * 50 }})
@@ -174,6 +216,7 @@ function start() {
 	}
 	window.requestAnimationFrame(gameloop)
 	generateInteractionMatrix()
+	frictionHalfLife = document.getElementById("frictionHalfLife").value
 	document.getElementById("start").disabled = true
 }
 document.addEventListener("keyup", (e)=>{
