@@ -3,37 +3,44 @@
 		<title>Particle Life</title>
 	</head>
 	<body>
-		<p id="fps"></p>
-		<div class="rulesContainer">
-			<p>Starting particle distance (lower = more particles):</p>
-			<input type="range" min="15" max="40" value="18" class="slider" id="startingDist"> <span id="particlePrediction"></span>
-			<br>
-			<p>Friction Half Life (lower = more friction):</p>
-			<input type="number" min="0" max="1" value="0.1" id="frictionHalfLife"> <button id="applyFriction" onclick="applyFriction();">Apply</button>
-			<br>
-			<table id="attractionTable">
-				<tr>  <th></th> <th>Red</th> <th>Green</th> <th>Blue</th> <th>Purple</th> </tr>
-				<tr>  <th>Red</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-				<tr>  <th>Green</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-				<tr>  <th>Blue</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-				<tr>  <th>Purple</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-			</table>
-			<button id="random" onclick="random()" type="button">Random</button> 
-			<br>
-			<input id="presetName">
-			<button id="savePreset" onclick="savePreset()" type="button">Save Preset</button> 
-			<button id="loadPreset" onclick="loadPreset()" type="button">Load Preset</button> 
-			<p id="presetStatus"></p>
-			<p id="presetList"></p>
-			<button onclick="start()" id="start">Start</button>
+		
+		
+		<div style="display: flex;  align-items: center;">
+			<span class="rulesContainer" style="margin: 0 10px;">
+				<p id="fps"></p>
+				<p>Starting particle distance (lower = more particles):</p>
+				<input type="range" min="15" max="40" value="18" class="slider" id="startingDist"> <span id="particlePrediction"></span>
+				<br>
+				<p>Friction Half Life (lower = more friction):</p>
+				<input type="number" min="0" max="1" value="0.1" id="frictionHalfLife"> <button id="applyFriction" onclick="applyFriction();">Apply</button>
+				<br>
+				<table id="attractionTable">
+					<tr>  <th></th> <th>Red</th> <th>Green</th> <th>Blue</th> <th>Purple</th> </tr>
+					<tr>  <th>Red</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+					<tr>  <th>Green</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+					<tr>  <th>Blue</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+					<tr>  <th>Purple</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+				</table>
+				<button id="random" onclick="random()" type="button">Random</button> 
+				<br>
+				<input id="presetName">
+				<button id="savePreset" onclick="savePreset()" type="button">Save Preset</button> 
+				<button id="loadPreset" onclick="loadPreset()" type="button">Load Preset</button> 
+				<button id="deletePreset" onclick="deletePreset()" type="button">Delete Preset</button> 
+				<p id="presetStatus"></p>
+				<p id="presetList"></p>
+				<button onclick="start()" id="start">Start</button><button onclick="reset()" id="reset">Reset</button>
+			</span>
+			<canvas id="canvas" width="1000" height="650" style=" flex: 1"></canvas>
+			<span style="margin: 0 10px;">
+				<p>Zoom:</p>
+				<input type="range" min="0.5" max="10" value="1" class="slider" id="zoom">
+				<button onclick="resetView()">Reset View</button>
+				
+				<p>Particle size:</p>
+				<input type="range" min="1" max="10" value="2" class="slider" id="size">
+			</span>
 		</div>
-		<canvas id="canvas" width="1000" height="650"></canvas>
-		<p>Zoom:</p>
-			<input type="range" min="0.5" max="10" value="1" class="slider" id="zoom">
-			<button onclick="resetView()">Reset View</button>
-			
-			<p>Particle size:</p>
-			<input type="range" min="1" max="10" value="2" class="slider" id="size">
 		<script src="./script.js"></script>
 	</body>
 </html>

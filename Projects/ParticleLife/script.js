@@ -61,6 +61,24 @@ function loadPreset() {
 		setTableDefaults();
 	}
 }
+function deletePreset() {
+	var name = document.getElementById('presetName').value
+	if(localStorage.getItem("interactionMatrix-" + name) == null) {
+		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
+	} else {
+		presetStatus.innerHTML = "Preset \"" + name + "\" deleted";
+		var changeList = localStorage.getItem("presetList");
+		if(changeList.search("<br>"+name+"<br>") != -1) {
+			changeList = changeList.slice(0, changeList.search("<br>"+name+"<br>")) + changeList.slice(("<br>"+name).length)
+		} else {
+			presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
+			return;
+		}
+
+		localStorage.setItem("presetList", changeList)
+		presetListDisplay.innerHTML = changeList;
+	}
+}
 function random() {
 	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
 		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
@@ -159,6 +177,7 @@ startingSlider.oninput = () => {
 var lastLoop;
 var paused = false;
 var fps, deltaTime
+var reseting = false;
 function gameloop(timestamp) {
 	
 	lastLoop = lastLoop ?? timestamp
@@ -175,7 +194,11 @@ function gameloop(timestamp) {
 		particles[i].draw()
 	}
 
-	window.requestAnimationFrame(gameloop)
+	if(!reseting) {
+		window.requestAnimationFrame(gameloop)
+	} else {
+		reseting = false
+	}
 }
 var dragging = false;
 var previousX, previousY
@@ -221,6 +244,13 @@ function start() {
 	generateInteractionMatrix()
 	frictionHalfLife = document.getElementById("frictionHalfLife").value
 	document.getElementById("start").disabled = true
+}
+function reset() {
+	document.getElementById("start").disabled = false;
+	reseting = true;
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(0, 0, width, height)
+	particles = [];
 }
 document.addEventListener("keyup", (e)=>{
   if (e.keyCode == 32) {
