@@ -25,6 +25,9 @@ function generateInteractionMatrix() {
 		}
 	}
 }
+function applyFriction() {
+	frictionHalfLife = parseFloat(document.getElementById("frictionHalfLife").value)
+}
 var presetStatus = document.getElementById('presetStatus');
 var presetList = localStorage.getItem('presetList');
 if(presetList == null) {
