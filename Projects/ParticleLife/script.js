@@ -92,13 +92,7 @@ class Particle {
 	}
 }
 
-for(var i = startingSpace; i < width; i += startingSpace) {
-	for(var j = startingSpace; j < height; j += startingSpace) {
-		var rand = Math.random();
-		particles.push(new Particle({ x: i, y: j }, rand < 0.25 ? "red" : rand < 0.5 ? "blue" : rand < 0.75 ? "green" : "purple"))
-		
-	}
-}
+
 var zoomSlider = document.getElementById("zoom");
 zoomSlider.oninput = () => {
   zoomOutLevel = zoomSlider.value
@@ -107,6 +101,12 @@ zoomSlider.oninput = () => {
 var sizeSlider = document.getElementById("size");
 sizeSlider.oninput = () => {
   particleSize = sizeSlider.value
+}
+
+
+var startingSlider = document.getElementById("startingDist");
+startingSlider.oninput = () => {
+	startingSpace = parseInt(startingSlider.value)
 }
 
 //particles.forEach((a)=>{a.velocity = { x: (Math.random() - 0.5) * 50 , y: (Math.random() - 0.5) * 50 }})
@@ -165,6 +165,13 @@ function resetView() {
 	zoomSlider.value = 1;
 }
 function start() {
+	for(var i = startingSpace; i < width; i += startingSpace) {
+		for(var j = startingSpace; j < height; j += startingSpace) {
+			var rand = Math.random();
+			particles.push(new Particle({ x: i, y: j }, rand < 0.25 ? "red" : rand < 0.5 ? "blue" : rand < 0.75 ? "green" : "purple"))
+			
+		}
+	}
 	window.requestAnimationFrame(gameloop)
 	generateInteractionMatrix()
 	document.getElementById("start").disabled = true
