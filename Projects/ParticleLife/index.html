@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>Particle Life</title>
+	</head>
+	<body>
+		<p id="fps"></p>
+		<div class="rulesContainer">
+			
+			<br>
+			
+			<table id="attractionTable">
+				<tr>  <th></th> <th>Red</th> <th>Green</th> <th>Blue</th> <th>Purple</th> </tr>
+				<tr>  <th>Red</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+				<tr>  <th>Green</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+				<tr>  <th>Blue</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+				<tr>  <th>Purple</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
+			</table>
+			<button onclick="start()" id="start">Start</button>
+		</div>
+		<canvas id="canvas" width="1000" height="650"></canvas>
+		<p>Zoom:</p>
+			<input type="range" min="0.5" max="10" value="1" class="slider" id="zoom">
+			<button onclick="resetView()">Reset View</button>
+			
+			<p>Particle size:</p>
+			<input type="range" min="1" max="10" value="2" class="slider" id="size">
+		<script src="./script.js"></script>
+	</body>
+</html>
