@@ -274,7 +274,7 @@ function gameloop(timestamp) {
 	if(cursorMode.value != "spawn" && dragging) {
 		ctx.beginPath();
 		ctx.strokeStyle = "#FF0000";
-		ctx.arc(xCoord / zoomOutLevel, yCoord / zoomOutLevel, effectRadius.value, 0, 2 * Math.PI)
+		ctx.arc(xCoord / zoomOutLevel + xOffset, yCoord / zoomOutLevel + yOffset, effectRadius.value, 0, 2 * Math.PI)
 		ctx.stroke();
 	}
 	if(!reseting) {
