@@ -30,26 +30,45 @@ function applyFriction() {
 	frictionHalfLife = parseFloat(document.getElementById("frictionHalfLife").value)
 }
 var presetStatus = document.getElementById('presetStatus');
-var presetList = localStorage.getItem('presetList');
-if(presetList == null) {
-	presetList = "Presets:<br>"
-}
+var presetList = JSON.parse(localStorage.getItem('presetList') ?? "[]");
+var buttonStr = (name)=>{ return `<button id="savePreset" onclick='savePresetFromName("${name}")' type="button">Update Preset</button> 
+						<button id="loadPreset" onclick='loadPreset("${name}")' type="button">Load Preset</button> 
+						<button id="deletePreset" onclick='deletePreset("${name}")' type="button">Delete Preset</button> 
+						<button id="exportPreset" onclick='exportPreset("${name}")' type="button">Export Preset</button> `}
 var presetListDisplay = document.getElementById('presetList');
-presetListDisplay.innerHTML = presetList;
+showPresetList()
 function savePreset() {
 	var name = document.getElementById('presetName').value
+	if(name.search("<") != -1 || name.search(">") != -1) {
+		presetStatus.innerHTML = "Invalid name";
+		return
+	}
+	savePresetFromName(name)
+}
+function savePresetFromName(name) {
+	deletePreset(name)
 	generateInteractionMatrix()
 	localStorage.setItem("interactionMatrix-"+name, JSON.stringify(interactionMatrix))
 	localStorage.setItem("friction-"+name, frictionHalfLife)
 	localStorage.setItem("particleDistance-"+name, startingSpace)
 	localStorage.setItem("simDistance-"+name, simDistance)
+	
 	presetStatus.innerHTML = "Preset \"" + name + "\" saved";
-	presetList = presetList + "<br>" + name + "<br>";
-	localStorage.setItem('presetList', presetList);
-	presetListDisplay.innerHTML = presetList;
+	presetList.push(name)
+	localStorage.setItem('presetList', JSON.stringify(presetList));
+
+	showPresetList();
 }
-function loadPreset() {
-	var name = document.getElementById('presetName').value
+
+function showPresetList() {
+
+	var tempString = "Presets: <br>";
+	for(var i = 0; i < presetList.length; i++) {
+		tempString += presetList[i] + "  " + buttonStr(presetList[i]) + "<br>"
+	}
+	presetListDisplay.innerHTML = tempString;
+}
+function loadPreset(name) {
 	if(localStorage.getItem("interactionMatrix-" + name) == null) {
 		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
 	} else {
@@ -66,31 +85,21 @@ function loadPreset() {
 		setTableDefaults();
 	}
 }
-function deletePreset() {
-	var name = document.getElementById('presetName').value
-	if(localStorage.getItem("interactionMatrix-" + name) == null) {
-		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
-	} else {
-		presetStatus.innerHTML = "Preset \"" + name + "\" deleted";
-		var changeList = localStorage.getItem("presetList");
-		if(changeList.search("<br>"+name+"<br>") != -1) {
-			changeList = changeList.slice(0, changeList.search("<br>"+name+"<br>")) + changeList.slice(changeList.search("<br>"+name+"<br>") + ("<br>"+name+"<br>").length, changeList.length)		
-		} else {
-			presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
-			return;
-		}
-
-		localStorage.setItem("presetList", changeList)
-		presetListDisplay.innerHTML = changeList;
-		
-	}
+function deletePreset(name) {
+	var changeList = presetList.filter((a)=>{return a != name});
+	localStorage.setItem("presetList", JSON.stringify(changeList))
+	presetList = changeList
+	showPresetList();
 }
-
 function importPreset() {
 	var importEncoded = document.getElementById('presetString').value
 	var importStrPlain = atob(importEncoded)
 	var importObj = JSON.parse(importStrPlain);
-	
+	if(importObj.name.search("<") != -1 || importObj.name.search(">") != -1) {
+		presetStatus.innerHTML = "Invalid name (This could be an attempt to run code on your browser, be sure the preset code is from a trustworthy source.)";
+		return
+	}
+	deletePreset(importObj.name)
 	localStorage.setItem("interactionMatrix-"+importObj.name, JSON.stringify(importObj.matrix))
 	localStorage.setItem("friction-"+importObj.name, importObj.fricition)
 	localStorage.setItem("particleDistance-"+importObj.name, importObj.starting)
@@ -105,13 +114,12 @@ function importPreset() {
 	document.getElementById("simDistance").value = importObj.simDistance ?? 50;
 	document.getElementById("simDistanceDisplay").innerHTML = importObj.simDistance ?? 50;
 
-	presetList = presetList + "<br>" + importObj.name + "<br>";
-	localStorage.setItem('presetList', presetList);
-	presetListDisplay.innerHTML = presetList;
+	presetList.push(importObj.name)
+	localStorage.setItem('presetList', JSON.stringify(presetList));
+	showPresetList();
 }
 
-function exportPreset() {
-	var name = document.getElementById('presetName').value
+function exportPreset(name) {
 	if(localStorage.getItem("interactionMatrix-" + name) == null) {
 		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
 	} else {
@@ -135,7 +143,7 @@ function random() {
 
 var particles = [];
 var running = false;
-var startingSpace = 18;
+var startingSpace = 35;
 var particleSize = 2;
 var colorMapping = {
 	red: "#ff0000",
@@ -181,6 +189,16 @@ class Particle {
 
 			this.velocity.x -= xDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime
 			this.velocity.y -= yDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime
+		}
+		var xDiff = this.position.x - xCoord;
+		var yDiff = this.position.y - yCoord;
+		var distance = (xDiff**2 + yDiff**2)**(1/2)
+		if(distance / zoomOutLevel < effectRadius.value && distance > 0 && dragging) {
+			var f = force(distance / zoomOutLevel / effectRadius.value)
+			if(!isNaN( xDiff / distance * f * effectMultiplier * 100 * deltaTime)) {
+				this.velocity.x -= xDiff / distance * f * effectMultiplier * 100 * deltaTime
+				this.velocity.y -= yDiff / distance * f * effectMultiplier * 100 * deltaTime
+			}
 		}
 		frictionFactor = Math.pow(0.5, dt / frictionHalfLife)
 		this.velocity.x *= frictionFactor;
@@ -234,6 +252,10 @@ var lastLoop;
 var paused = false;
 var fps, deltaTime
 var reseting = false;
+var xCoord, yCoord;
+ctx.fillStyle = "#000000";
+ctx.fillRect(0, 0, width, height)
+fpsCounter.innerHTML = "fps: " + 60 + "  particles: " + particles.length
 function gameloop(timestamp) {
 	
 	lastLoop = lastLoop ?? timestamp
@@ -249,7 +271,12 @@ function gameloop(timestamp) {
 	for(var i = 0; i < particles.length; i++) {
 		particles[i].draw()
 	}
-
+	if(cursorMode.value != "spawn" && dragging) {
+		ctx.beginPath();
+		ctx.strokeStyle = "#FF0000";
+		ctx.arc(xCoord / zoomOutLevel, yCoord / zoomOutLevel, effectRadius.value, 0, 2 * Math.PI)
+		ctx.stroke();
+	}
 	if(!reseting) {
 		window.requestAnimationFrame(gameloop)
 	} else {
@@ -363,17 +390,24 @@ function start() {
 	frictionHalfLife = document.getElementById("frictionHalfLife").value
 	document.getElementById("start").disabled = true
 	document.getElementById("reset").disabled = false;
+	document.getElementById("stop").disabled = false;
 	started = true;
 }
 document.getElementById("reset").disabled = true;
-function reset() {
+document.getElementById("stop").disabled = true;
+function stop() {
 	document.getElementById("start").disabled = false;
 	started = false;
 	document.getElementById("reset").disabled = true;
+	document.getElementById("stop").disabled = true;
 	reseting = true;
 	ctx.fillStyle = "#FFFFFF";
 	ctx.fillRect(0, 0, width, height)
 	particles = [];
+}
+function reset() {
+	stop();
+	start();
 }
 document.addEventListener("keyup", (e)=>{
   if (e.keyCode == 32 && started) {
@@ -386,38 +420,43 @@ var colorSelect = document.getElementById('spawnColor');
 
 var effectRadiusLabel = document.getElementById('effectRadiusLabel');
 var effectRadius = document.getElementById('effectRadius');
+var effectStrength = document.getElementById('effectStrength');
+var effectMultiplier = 0;
 function spawnParticleAtMouse(e) {
 	placeColor = colorSelect.value
 	var rect = canvas.getBoundingClientRect();
-	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel //* window.devicePixelRatio;
-	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel //* window.devicePixelRatio;
+	xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel
+	yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
 	var rand = Math.random();
 	particles.push(new Particle({ x: xCoord, y: yCoord}, placeColor))
 	
 }
 function deleteParticleAtMouse(e) {
-	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
-	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
-	for(var i = 0; i < particles.length; i++) {
-		
-	}
-}
-function pushParticleAtMouse(e) {
-	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
-	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
+	var rect = canvas.getBoundingClientRect();
+	xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
+	yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
 	for(var i = 0; i < particles.length; i++) {
 		var xDiff = xCoord - particles[i].position.x
 		var yDiff = yCoord - particles[i].position.y
 		var distance = (xDiff**2 + yDiff**2)**(1/2)
 		
-		if(distance < effectRadius.value) {
+		if(distance / zoomOutLevel  < effectRadius.value) {
+
+			particles.splice(i, 1)
+			
 		}
 	}
 }
+function pushParticleAtMouse(e) {
+	var rect = canvas.getBoundingClientRect();
+	xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
+	yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
+	effectMultiplier = -1 * effectStrength.value;
+}
+
 function pullParticleAtMouse(e) {
-	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
-	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
-	for(var i = 0; i < particles.length; i++) {
-		
-	}
+	var rect = canvas.getBoundingClientRect();
+	xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
+	yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
+	effectMultiplier = 1 * effectStrength.value;
 }
