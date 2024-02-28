@@ -14,6 +14,7 @@
 				<p>Friction Half Life (lower = more friction):</p>
 				<input type="number" min="0" max="1" value="0.1" id="frictionHalfLife"> <button id="applyFriction" onclick="applyFriction();">Apply</button>
 				<br>
+				<br>
 				<table id="attractionTable">
 					<tr>  <th></th> <th>Red</th> <th>Green</th> <th>Blue</th> <th>Purple</th> </tr>
 					<tr>  <th>Red</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
@@ -23,12 +24,20 @@
 				</table>
 				<button id="random" onclick="random()" type="button">Random</button> 
 				<br>
-				<input id="presetName">
+				<p>Preset name:</p>
+				<input id="presetName"><br>
 				<button id="savePreset" onclick="savePreset()" type="button">Save Preset</button> 
 				<button id="loadPreset" onclick="loadPreset()" type="button">Load Preset</button> 
 				<button id="deletePreset" onclick="deletePreset()" type="button">Delete Preset</button> 
-				<p id="presetStatus"></p>
+				<button id="exportPreset" onclick="exportPreset()" type="button">Export Preset</button> 
+				<div  width="50px">
+					<p id="presetStatus"   style="word-break: break-all; max-width: 300px;"></p>
+				</div>
 				<p id="presetList"></p>
+				<input id="presetString">
+				<button id="importPreset" onclick="importPreset()" type="button">Import Preset</button>
+				<br>
+				<br>
 				<button onclick="start()" id="start">Start</button><button onclick="reset()" id="reset">Reset</button>
 			</span>
 			<canvas id="canvas" width="1000" height="650" style=" flex: 1"></canvas>
@@ -39,6 +48,16 @@
 				
 				<p>Particle size:</p>
 				<input type="range" min="1" max="10" value="2" class="slider" id="size">
+				<br>
+
+				<p>Placing Color:</p>
+				<button onclick='placeColor = "red"'>Red</button>
+				<br>
+				<button onclick='placeColor = "green"'>Green</button>
+				<br>
+				<button onclick='placeColor = "blue"'>Blue</button>
+				<br>
+				<button onclick='placeColor = "purple"'>Purple</button>
 			</span>
 		</div>
 		<script src="./script.js"></script>

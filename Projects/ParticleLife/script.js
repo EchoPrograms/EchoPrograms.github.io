@@ -42,7 +42,7 @@ function savePreset() {
 	localStorage.setItem("friction-"+name, frictionHalfLife)
 	localStorage.setItem("particleDistance-"+name, startingSpace)
 	presetStatus.innerHTML = "Preset \"" + name + "\" saved";
-	presetList = presetList + "<br>" + name;
+	presetList = presetList + "<br>" + name + "<br>";
 	localStorage.setItem('presetList', presetList);
 	presetListDisplay.innerHTML = presetList;
 }
@@ -69,16 +69,50 @@ function deletePreset() {
 		presetStatus.innerHTML = "Preset \"" + name + "\" deleted";
 		var changeList = localStorage.getItem("presetList");
 		if(changeList.search("<br>"+name+"<br>") != -1) {
-			changeList = changeList.slice(0, changeList.search("<br>"+name+"<br>")) + changeList.slice(("<br>"+name).length)
-		} else {
+			changeList = changeList.slice(0, changeList.search("<br>"+"bit blue eaters"+"<br>")) + changeList.slice(changeList.search("<br>"+"bit blue eaters"+"<br>") + ("<br>"+"bit blue eaters"+"<br>").length, changeList.length)		} else {
 			presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
 			return;
 		}
 
 		localStorage.setItem("presetList", changeList)
 		presetListDisplay.innerHTML = changeList;
+		
 	}
 }
+
+function importPreset() {
+	var importEncoded = document.getElementById('presetString').value
+	var importStrPlain = atob(importEncoded)
+	var importObj = JSON.parse(importStrPlain);
+	console.log(importObj)
+	localStorage.setItem("interactionMatrix-"+importObj.name, JSON.stringify(importObj.matrix))
+	localStorage.setItem("friction-"+importObj.name, importObj.fricition)
+	localStorage.setItem("particleDistance-"+importObj.name, importObj.starting)
+
+	interactionMatrix = importObj.matrix
+	frictionHalfLife = importObj.fricition
+	startingSpace = importObj.starting
+
+	setTableDefaults();
+
+	presetList = presetList + "<br>" + importObj.name + "<br>";
+	localStorage.setItem('presetList', presetList);
+	presetListDisplay.innerHTML = presetList;
+}
+
+function exportPreset() {
+	var name = document.getElementById('presetName').value
+	if(localStorage.getItem("interactionMatrix-" + name) == null) {
+		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
+	} else {
+		loadPreset()
+		var exportObj = {name: name, matrix: interactionMatrix, fricition: frictionHalfLife, starting: startingSpace };
+		var exportStrPlain = JSON.stringify(exportObj);
+		presetStatus.innerHTML = "Export: " + btoa(exportStrPlain)
+	}
+}
+
+
 function random() {
 	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
 		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
@@ -127,9 +161,14 @@ class Particle {
 			if(particles[i] === this) continue
 			var xDiff = this.position.x - particles[i].position.x
 			var yDiff = this.position.y - particles[i].position.y
+
 			var distance = (xDiff**2 + yDiff**2)**(1/2)
 			if(distance > simDistance || distance < 0) continue
 			var f = force(distance / simDistance)
+			if(isNaN( xDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime)) {
+				continue;
+			}
+
 			this.velocity.x -= xDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime
 			this.velocity.y -= yDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime
 		}
@@ -144,7 +183,7 @@ class Particle {
 		ctx.beginPath();
 		ctx.fillStyle = colorMapping[this.color];
 		ctx.strokeStyle = colorMapping[this.color];
-		ctx.arc(this.position.x / zoomOutLevel + xOffset, this.position.y / zoomOutLevel + yOffset   , particleSize / zoomOutLevel, 0, 2 * Math.PI)
+		ctx.arc(this.position.x / zoomOutLevel + xOffset, this.position.y / zoomOutLevel + yOffset, particleSize / zoomOutLevel, 0, 2 * Math.PI)
 		ctx.fill();
 		ctx.stroke();
 	}
@@ -157,6 +196,7 @@ class Particle {
 var zoomSlider = document.getElementById("zoom");
 zoomSlider.oninput = () => {
   zoomOutLevel = zoomSlider.value
+
 }
 
 var sizeSlider = document.getElementById("size");
@@ -186,7 +226,7 @@ function gameloop(timestamp) {
 	fps = 1000 / (deltaTime * 1000);
 	lastLoop = timestamp;
 
-	fpsCounter.innerHTML = "fps: " + Math.floor(fps)
+	fpsCounter.innerHTML = "fps: " + Math.floor(fps) + "  particles: " + particles.length
 
 	ctx.fillStyle = "#000000";
 	ctx.fillRect(0, 0, width, height)
@@ -202,18 +242,34 @@ function gameloop(timestamp) {
 }
 var dragging = false;
 var previousX, previousY
-canvas.addEventListener("mousedown",()=>{ dragging = true })
+canvas.addEventListener("mousedown",()=>{ 
+	dragging = true 
+})
 canvas.addEventListener("mousemove",(e)=>{
 	if (dragging) { 
-		var deltaX = e.clientX - previousX;
-		var deltaY = e.clientY - previousY;
-		xOffset += isNaN(deltaX) ? 0 : deltaX;
-		yOffset += isNaN(deltaY) ? 0 : deltaY;
-		previousX = e.clientX;
-		previousY = e.clientY;
+		switch(e.which) {
+			case 2:
+				var deltaX = (e.clientX - previousX) / 1.13;
+				var deltaY = (e.clientY - previousY) / 1.13;
+				xOffset += isNaN(deltaX) ? 0 : deltaX;
+				yOffset += isNaN(deltaY) ? 0 : deltaY;
+				previousX = e.clientX;
+				previousY = e.clientY;
+				break;
+			case 1:
+				spawnParticleAtMouse(e)
+				break
+		}
 	}
 })
 canvas.addEventListener("mouseup",()=>{ dragging = false;  previousX = NaN; previousY = NaN})
+
+canvas.addEventListener('wheel', (e)=>{
+	var zoom = e.deltaY < 0 ? -0.5 : 0.5;
+	zoom = Math.max(Math.min(zoomOutLevel + zoom, 10), 0.5) 
+	zoomSlider.value = zoom
+	zoomOutLevel = zoom
+});
 
 function force(distance) {
 	var threshold = 0.3;
@@ -244,9 +300,12 @@ function start() {
 	generateInteractionMatrix()
 	frictionHalfLife = document.getElementById("frictionHalfLife").value
 	document.getElementById("start").disabled = true
+	document.getElementById("reset").disabled = false;
 }
+document.getElementById("reset").disabled = true;
 function reset() {
 	document.getElementById("start").disabled = false;
+	document.getElementById("reset").disabled = true;
 	reseting = true;
 	ctx.fillStyle = "#FFFFFF";
 	ctx.fillRect(0, 0, width, height)
@@ -257,3 +316,12 @@ document.addEventListener("keyup", (e)=>{
    paused = !paused;
   }
 })
+var placeColor = "red"
+function spawnParticleAtMouse(e) {
+	var rect = canvas.getBoundingClientRect();
+	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel;
+	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel;
+	var rand = Math.random();
+	particles.push(new Particle({ x: xCoord / 1.08, y: yCoord /1.08 }, placeColor))
+	
+}
