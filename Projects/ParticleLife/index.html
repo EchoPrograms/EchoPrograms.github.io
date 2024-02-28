@@ -8,8 +8,11 @@
 		<div style="display: flex;  align-items: center;">
 			<span class="rulesContainer" style="margin: 0 10px;">
 				<p id="fps"></p>
-				<p>Starting particle distance (lower = more particles):</p>
+				<p>Starting Particle Distance (lower = more particles):</p>
 				<input type="range" min="15" max="40" value="18" class="slider" id="startingDist"> <span id="particlePrediction"></span>
+				<br>
+				<p>Particle Interaction Distance:</p>
+				<input type="range" min="15" max="200" value="50" class="slider" id="simDistance"> <span id="simDistanceDisplay">50</span>
 				<br>
 				<p>Friction Half Life (lower = more friction):</p>
 				<input type="number" min="0" max="1" value="0.1" id="frictionHalfLife"> <button id="applyFriction" onclick="applyFriction();">Apply</button>
@@ -33,15 +36,19 @@
 				<div  width="50px">
 					<p id="presetStatus"   style="word-break: break-all; max-width: 300px;"></p>
 				</div>
-				<p id="presetList"></p>
+				
 				<input id="presetString">
 				<button id="importPreset" onclick="importPreset()" type="button">Import Preset</button>
 				<br>
 				<br>
+				<p id="presetList"></p>
+				<br>
+				<br>
 				<button onclick="start()" id="start">Start</button><button onclick="reset()" id="reset">Reset</button>
 			</span>
-			<canvas id="canvas" width="1000" height="650" style=" flex: 1"></canvas>
+			<canvas id="canvas" width="1000px" height="650px" style=" width="1000px"></canvas>
 			<span style="margin: 0 10px;">
+				<h1 id="pauseIndicator"></h1>
 				<p>Zoom:</p>
 				<input type="range" min="0.5" max="10" value="1" class="slider" id="zoom">
 				<button onclick="resetView()">Reset View</button>
@@ -49,15 +56,28 @@
 				<p>Particle size:</p>
 				<input type="range" min="1" max="10" value="2" class="slider" id="size">
 				<br>
-
-				<p>Placing Color:</p>
-				<button onclick='placeColor = "red"'>Red</button>
+				<vr>
+				<p>Cursor Mode</p>
+				<select id="cursorMode">
+					<option value="spawn">Spawn Particles</option>
+					<option value="delete">Delete Particles</option>
+					<option value="pull">Pull Particles</option>
+					<option value="push">Push Particles</option>
+				</select>
 				<br>
-				<button onclick='placeColor = "green"'>Green</button>
-				<br>
-				<button onclick='placeColor = "blue"'>Blue</button>
-				<br>
-				<button onclick='placeColor = "purple"'>Purple</button>
+				<span id="colorSelectContainer">
+					<p>Spawn Color:</p>
+					<select id="spawnColor">
+						<option value="red">Red</option>
+						<option value="green">Green</option>
+						<option value="blue">Blue</option>
+						<option value="purple">Purple</option>
+					</select>
+				</span>
+				<span id="radiusContainer">
+					<p>Effect Radius:</p>
+					<input type="number" min="0" max="50" value="5" id="effectRadius"><span id="effectRadiusLabel"></span>
+				</span>
 			</span>
 		</div>
 		<script src="./script.js"></script>

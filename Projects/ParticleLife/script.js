@@ -8,6 +8,7 @@ var interactionMatrix =
 var attractionTable = document.getElementById("attractionTable").childNodes[1]
 var topLevelKeys = Object.keys(interactionMatrix)
 var subLevelKeys = Object.keys(interactionMatrix[topLevelKeys[0]])
+var started = false;
 setTableDefaults()
 
 function setTableDefaults() {
@@ -41,6 +42,7 @@ function savePreset() {
 	localStorage.setItem("interactionMatrix-"+name, JSON.stringify(interactionMatrix))
 	localStorage.setItem("friction-"+name, frictionHalfLife)
 	localStorage.setItem("particleDistance-"+name, startingSpace)
+	localStorage.setItem("simDistance-"+name, simDistance)
 	presetStatus.innerHTML = "Preset \"" + name + "\" saved";
 	presetList = presetList + "<br>" + name + "<br>";
 	localStorage.setItem('presetList', presetList);
@@ -54,10 +56,13 @@ function loadPreset() {
 		interactionMatrix = JSON.parse(localStorage.getItem("interactionMatrix-"+name)) ?? interactionMatrix
 		frictionHalfLife = localStorage.getItem("friction-"+name)
 		startingSpace = parseInt(localStorage.getItem("particleDistance-"+name))
+		simDistance = isNaN(parseInt(localStorage.getItem("simDistance-"+name))) ? 50 : parseInt(localStorage.getItem("simDistance-"+name))
 		console.log(startingSpace)
 		presetStatus.innerHTML = "Preset \"" + name + "\" loaded";
 		document.getElementById("startingDist").value = parseInt(startingSpace);
 		document.getElementById("frictionHalfLife").value = frictionHalfLife;
+		document.getElementById("simDistance").value = simDistance;
+		document.getElementById("simDistanceDisplay").innerHTML = simDistance;
 		setTableDefaults();
 	}
 }
@@ -69,7 +74,8 @@ function deletePreset() {
 		presetStatus.innerHTML = "Preset \"" + name + "\" deleted";
 		var changeList = localStorage.getItem("presetList");
 		if(changeList.search("<br>"+name+"<br>") != -1) {
-			changeList = changeList.slice(0, changeList.search("<br>"+"bit blue eaters"+"<br>")) + changeList.slice(changeList.search("<br>"+"bit blue eaters"+"<br>") + ("<br>"+"bit blue eaters"+"<br>").length, changeList.length)		} else {
+			changeList = changeList.slice(0, changeList.search("<br>"+name+"<br>")) + changeList.slice(changeList.search("<br>"+name+"<br>") + ("<br>"+name+"<br>").length, changeList.length)		
+		} else {
 			presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
 			return;
 		}
@@ -84,16 +90,20 @@ function importPreset() {
 	var importEncoded = document.getElementById('presetString').value
 	var importStrPlain = atob(importEncoded)
 	var importObj = JSON.parse(importStrPlain);
-	console.log(importObj)
+	
 	localStorage.setItem("interactionMatrix-"+importObj.name, JSON.stringify(importObj.matrix))
 	localStorage.setItem("friction-"+importObj.name, importObj.fricition)
 	localStorage.setItem("particleDistance-"+importObj.name, importObj.starting)
+	localStorage.setItem("simDistance-"+importObj.name, importObj.simDistance ?? 50)
 
 	interactionMatrix = importObj.matrix
 	frictionHalfLife = importObj.fricition
 	startingSpace = importObj.starting
-
+	simDistance = importObj.simDistance;
+	
 	setTableDefaults();
+	document.getElementById("simDistance").value = importObj.simDistance ?? 50;
+	document.getElementById("simDistanceDisplay").innerHTML = importObj.simDistance ?? 50;
 
 	presetList = presetList + "<br>" + importObj.name + "<br>";
 	localStorage.setItem('presetList', presetList);
@@ -106,7 +116,7 @@ function exportPreset() {
 		presetStatus.innerHTML = "Preset \"" + name + "\" doesn't exist";
 	} else {
 		loadPreset()
-		var exportObj = {name: name, matrix: interactionMatrix, fricition: frictionHalfLife, starting: startingSpace };
+		var exportObj = {name: name, matrix: interactionMatrix, fricition: frictionHalfLife, starting: startingSpace, simDistance: simDistance};
 		var exportStrPlain = JSON.stringify(exportObj);
 		presetStatus.innerHTML = "Export: " + btoa(exportStrPlain)
 	}
@@ -204,6 +214,12 @@ sizeSlider.oninput = () => {
   particleSize = sizeSlider.value
 }
 
+var simDistanceSlider = document.getElementById("simDistance");
+var simDistanceDisplay = document.getElementById("simDistanceDisplay");
+simDistanceSlider.oninput = () => {
+	simDistance = parseInt(simDistanceSlider.value)
+	simDistanceDisplay.innerHTML = simDistanceSlider.value
+}
 
 var startingSlider = document.getElementById("startingDist");
 var particlePrediction = document.getElementById("particlePrediction");
@@ -242,22 +258,67 @@ function gameloop(timestamp) {
 }
 var dragging = false;
 var previousX, previousY
-canvas.addEventListener("mousedown",()=>{ 
+var cursorMode = document.getElementById('cursorMode');
+document.getElementById('colorSelectContainer').hidden = false;
+document.getElementById('radiusContainer').hidden = true;
+cursorMode.oninput = () => {
+  	if(cursorMode.value == "spawn") {
+		document.getElementById('colorSelectContainer').hidden = false;
+		document.getElementById('radiusContainer').hidden = true;
+  	} else {
+		document.getElementById('colorSelectContainer').hidden = true;
+		document.getElementById('radiusContainer').hidden = false;
+	}
+}
+canvas.addEventListener("mousedown",(e)=>{ 
+	if(!started) return;
+	switch(e.which) {
+		case 1:
+			switch(cursorMode.value) {
+				case "spawn":	
+					spawnParticleAtMouse(e)
+					break;
+				case "delete":	
+					deleteParticleAtMouse(e)
+					break;
+				case "push":	
+					pushParticleAtMouse(e)
+					break;
+				case "pull":	
+					pullParticleAtMouse(e)
+					break;
+			}
+			break
+	}
 	dragging = true 
 })
 canvas.addEventListener("mousemove",(e)=>{
+	if(!started) return;
 	if (dragging) { 
 		switch(e.which) {
 			case 2:
-				var deltaX = (e.clientX - previousX) / 1.13;
-				var deltaY = (e.clientY - previousY) / 1.13;
+				var deltaX = (e.clientX - previousX);
+				var deltaY = (e.clientY - previousY);
 				xOffset += isNaN(deltaX) ? 0 : deltaX;
 				yOffset += isNaN(deltaY) ? 0 : deltaY;
 				previousX = e.clientX;
 				previousY = e.clientY;
 				break;
 			case 1:
-				spawnParticleAtMouse(e)
+				switch(cursorMode.value) {
+					case "spawn":	
+						spawnParticleAtMouse(e)
+						break;
+					case "delete":	
+						deleteParticleAtMouse(e)
+						break;
+					case "push":	
+						pushParticleAtMouse(e)
+						break;
+					case "pull":	
+						pullParticleAtMouse(e)
+						break;
+				}
 				break
 		}
 	}
@@ -265,6 +326,7 @@ canvas.addEventListener("mousemove",(e)=>{
 canvas.addEventListener("mouseup",()=>{ dragging = false;  previousX = NaN; previousY = NaN})
 
 canvas.addEventListener('wheel', (e)=>{
+	if(!started) return;
 	var zoom = e.deltaY < 0 ? -0.5 : 0.5;
 	zoom = Math.max(Math.min(zoomOutLevel + zoom, 10), 0.5) 
 	zoomSlider.value = zoom
@@ -301,10 +363,12 @@ function start() {
 	frictionHalfLife = document.getElementById("frictionHalfLife").value
 	document.getElementById("start").disabled = true
 	document.getElementById("reset").disabled = false;
+	started = true;
 }
 document.getElementById("reset").disabled = true;
 function reset() {
 	document.getElementById("start").disabled = false;
+	started = false;
 	document.getElementById("reset").disabled = true;
 	reseting = true;
 	ctx.fillStyle = "#FFFFFF";
@@ -312,16 +376,48 @@ function reset() {
 	particles = [];
 }
 document.addEventListener("keyup", (e)=>{
-  if (e.keyCode == 32) {
+  if (e.keyCode == 32 && started) {
    paused = !paused;
+	document.getElementById('pauseIndicator').innerHTML = paused ? "Paused" : ""
   }
 })
 var placeColor = "red"
+var colorSelect = document.getElementById('spawnColor');
+
+var effectRadiusLabel = document.getElementById('effectRadiusLabel');
+var effectRadius = document.getElementById('effectRadius');
 function spawnParticleAtMouse(e) {
+	placeColor = colorSelect.value
 	var rect = canvas.getBoundingClientRect();
-	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel;
-	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel;
+	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel //* window.devicePixelRatio;
+	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel //* window.devicePixelRatio;
 	var rand = Math.random();
-	particles.push(new Particle({ x: xCoord / 1.08, y: yCoord /1.08 }, placeColor))
+	particles.push(new Particle({ x: xCoord, y: yCoord}, placeColor))
 	
+}
+function deleteParticleAtMouse(e) {
+	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
+	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
+	for(var i = 0; i < particles.length; i++) {
+		
+	}
+}
+function pushParticleAtMouse(e) {
+	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
+	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
+	for(var i = 0; i < particles.length; i++) {
+		var xDiff = xCoord - particles[i].position.x
+		var yDiff = yCoord - particles[i].position.y
+		var distance = (xDiff**2 + yDiff**2)**(1/2)
+		
+		if(distance < effectRadius.value) {
+		}
+	}
+}
+function pullParticleAtMouse(e) {
+	var xCoord = (e.clientX  - xOffset - rect.left)  * zoomOutLevel 
+	var yCoord = (e.clientY  - yOffset  - rect.top)  * zoomOutLevel
+	for(var i = 0; i < particles.length; i++) {
+		
+	}
 }
