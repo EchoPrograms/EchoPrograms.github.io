@@ -25,3 +25,8 @@
 html {
     background-color: #111;
 }
+button, select, input {
+    border: 2px black solid;
+    border-radius:0px;
+    background-color: #CCC;
+}
