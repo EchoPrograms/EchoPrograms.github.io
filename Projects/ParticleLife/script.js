@@ -44,15 +44,17 @@ function generateInteractionMatixBase() {
 		}
 	}
 }
+
 function createTable(){
 	generateInteractionMatixBase();
 	var colors = Object.keys(colorMapping);
 	var elementString = "";
-
+	var spawnElementString = "";
 	elementString += "<tr>";
 	elementString += "<th></th>";
 	for(var i = 0; i < colors.length; i++) {
 		elementString += `<th>${colors[i]}</th>`
+		spawnElementString += `<option value="${colors[i]}">${colors[i]}</option>`
 	}
 	elementString += "</tr>";
 
@@ -65,6 +67,7 @@ function createTable(){
 		elementString += "</tr>";
 	}
 	document.getElementById("attractionTable").innerHTML = elementString;
+	document.getElementById("spawnColor").innerHTML = spawnElementString
 }
 function generateInteractionMatrix() {
 	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
@@ -433,15 +436,19 @@ function start() {
 	document.getElementById("start").disabled = true
 	document.getElementById("reset").disabled = false;
 	document.getElementById("stop").disabled = false;
+	document.getElementById("clear").disabled = false;
 	started = true;
 }
 document.getElementById("reset").disabled = true;
 document.getElementById("stop").disabled = true;
+document.getElementById("clear").disabled = true;
 function stop() {
 	document.getElementById("start").disabled = false;
 	started = false;
 	document.getElementById("reset").disabled = true;
 	document.getElementById("stop").disabled = true;
+	document.getElementById("clear").disabled = true;
+
 	reseting = true;
 	ctx.fillStyle = "#FFFFFF";
 	ctx.fillRect(0, 0, width, height)
