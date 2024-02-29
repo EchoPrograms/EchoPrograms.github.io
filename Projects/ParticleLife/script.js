@@ -1,24 +1,71 @@
-var interactionMatrix = 
-	{
-		red: { red: 15, green: 10, blue: -10, purple: 15 },
-		green: { red: -10, green: 50, blue: 20, purple: 15 },
-		blue: { red: 10, green: -10, blue: -10, purple: 15 },
-		purple: { red: -10, green: -10, blue: -10, purple: -10 }
-	};
-var attractionTable = document.getElementById("attractionTable").childNodes[1]
+
+var colorMapping = {
+		red: "#ff0000",
+		green: "#00ff00",
+		blue: "#0000ff",
+		purple: "#ff00ff",
+		cyan: "#00ffff",
+		yellow: "#ffff00",
+		white: "#ffffff",
+	}
+var interactionMatrix = {};
+createTable();
+
+
+var attractionTable = document.getElementById("attractionTable").childNodes[0]
 var topLevelKeys = Object.keys(interactionMatrix)
 var subLevelKeys = Object.keys(interactionMatrix[topLevelKeys[0]])
 var started = false;
-setTableDefaults()
+random()
 
 function setTableDefaults() {
-	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
-		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
-			attractionTable.childNodes[i].childNodes[k].childNodes[0].value = interactionMatrix[topLevelKeys[i/2 - 1]][subLevelKeys[(k - 1) / 2 - 1]]
+	for(var i = 1; i < attractionTable.childNodes.length; i ++) {
+		for(var k = 1; k < attractionTable.childNodes.length; k ++) {
+			attractionTable.childNodes[i].childNodes[k].childNodes[0].value = interactionMatrix[topLevelKeys[i - 1]][subLevelKeys[k - 2]]
 		}
 	}
 }
+var table = document.getElementById("attractionTable")
+var toggleTableButton = document.getElementById("toggleTable")
+var showing = false;
+function toggleTable() {
+	showing = !showing;
+	toggleTableButton.innerHTML = showing ? "Hide" : "Show";
+	table.hidden = !showing;
+}
+table.hidden = true;
+function generateInteractionMatixBase() {
+	interactionMatrix = {};
+	var colors = Object.keys(colorMapping);
+	for(var i = 0; i < colors.length; i++) {
+		interactionMatrix[colors[i]] = {};
+		for(var k = 0; k < colors.length; k++) {
+			interactionMatrix[colors[i]][colors[k]] = 0;
+		}
+	}
+}
+function createTable(){
+	generateInteractionMatixBase();
+	var colors = Object.keys(colorMapping);
+	var elementString = "";
 
+	elementString += "<tr>";
+	elementString += "<th></th>";
+	for(var i = 0; i < colors.length; i++) {
+		elementString += `<th>${colors[i]}</th>`
+	}
+	elementString += "</tr>";
+
+	for(var i = 0; i < colors.length; i++) {
+		elementString += "<tr>";
+		elementString += `<th>${colors[i]}</th>`
+		for(var k = 0; k < colors.length; k++) {
+			elementString += '<th><input type="number" min="-100" max="100" width="25"></th>'
+		}
+		elementString += "</tr>";
+	}
+	document.getElementById("attractionTable").innerHTML = elementString;
+}
 function generateInteractionMatrix() {
 	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
 		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
@@ -31,10 +78,7 @@ function applyFriction() {
 }
 var presetStatus = document.getElementById('presetStatus');
 var presetList = JSON.parse(localStorage.getItem('presetList') ?? "[]");
-var buttonStr = (name)=>{ return `<button id="savePreset" onclick='savePresetFromName("${name}")' type="button">Update Preset</button> 
-						<button id="loadPreset" onclick='loadPreset("${name}")' type="button">Load Preset</button> 
-						<button id="deletePreset" onclick='deletePreset("${name}")' type="button">Delete Preset</button> 
-						<button id="exportPreset" onclick='exportPreset("${name}")' type="button">Export Preset</button> `}
+var buttonStr = (name)=>{ return ` `}
 var presetListDisplay = document.getElementById('presetList');
 showPresetList()
 function savePreset() {
@@ -62,9 +106,9 @@ function savePresetFromName(name) {
 
 function showPresetList() {
 
-	var tempString = "Presets: <br>";
+	var tempString = "";
 	for(var i = 0; i < presetList.length; i++) {
-		tempString += presetList[i] + "  " + buttonStr(presetList[i]) + "<br>"
+		tempString += `<option value="${presetList[i]}">${presetList[i]}</option>`
 	}
 	presetListDisplay.innerHTML = tempString;
 }
@@ -132,9 +176,9 @@ function exportPreset(name) {
 
 
 function random() {
-	for(var i = 2; i < attractionTable.childNodes.length; i += 2) {
-		for(var k = 3; k < attractionTable.childNodes.length; k += 2) {
-			interactionMatrix[topLevelKeys[i/2 - 1]][subLevelKeys[(k - 1) / 2 - 1]] = Math.floor(Math.random() * 40 - 20)
+	for(var i = 1; i < attractionTable.childNodes.length; i ++) {
+		for(var k = 1; k < attractionTable.childNodes.length; k ++) {
+			interactionMatrix[topLevelKeys[i - 1]][subLevelKeys[k - 2]] = Math.floor(Math.random() * 40 - 20)
 		}
 	}
 	setTableDefaults();
@@ -145,12 +189,7 @@ var particles = [];
 var running = false;
 var startingSpace = 35;
 var particleSize = 2;
-var colorMapping = {
-	red: "#ff0000",
-	green: "#00ff00",
-	blue: "#0000ff",
-	purple: "#ff00ff",
-}
+
 var zoomOutLevel = 1;
 var xOffset = 0;
 var yOffset = 0;
@@ -183,12 +222,12 @@ class Particle {
 			var distance = (xDiff**2 + yDiff**2)**(1/2)
 			if(distance > simDistance || distance < 0) continue
 			var f = force(distance / simDistance)
-			if(isNaN( xDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime)) {
+			if(isNaN( xDiff / distance * f * parseInt(interactionMatrix[this.color][particles[i].color]) * 10 * deltaTime)) {
 				continue;
 			}
 
-			this.velocity.x -= xDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime
-			this.velocity.y -= yDiff / distance * f * interactionMatrix[this.color][particles[i].color] * 10 * deltaTime
+			this.velocity.x -= xDiff / distance * f * parseInt(interactionMatrix[this.color][particles[i].color]) * 10 * deltaTime
+			this.velocity.y -= yDiff / distance * f * parseInt(interactionMatrix[this.color][particles[i].color]) * 10 * deltaTime
 		}
 		var xDiff = this.position.x - xCoord;
 		var yDiff = this.position.y - yCoord;
@@ -271,7 +310,7 @@ function gameloop(timestamp) {
 	for(var i = 0; i < particles.length; i++) {
 		particles[i].draw()
 	}
-	if(cursorMode.value != "spawn" && dragging) {
+	if(cursorMode.value != "spawn" && dragging && mouseButton == 1) {
 		ctx.beginPath();
 		ctx.strokeStyle = "#FF0000";
 		ctx.arc(xCoord / zoomOutLevel + xOffset, yCoord / zoomOutLevel + yOffset, effectRadius.value, 0, 2 * Math.PI)
@@ -286,6 +325,7 @@ function gameloop(timestamp) {
 var dragging = false;
 var previousX, previousY
 var cursorMode = document.getElementById('cursorMode');
+var mouseButton = 0;
 document.getElementById('colorSelectContainer').hidden = false;
 document.getElementById('radiusContainer').hidden = true;
 cursorMode.oninput = () => {
@@ -299,7 +339,8 @@ cursorMode.oninput = () => {
 }
 canvas.addEventListener("mousedown",(e)=>{ 
 	if(!started) return;
-	switch(e.which) {
+	mouseButton = e.which
+	switch(mouseButton) {
 		case 1:
 			switch(cursorMode.value) {
 				case "spawn":	
@@ -380,8 +421,9 @@ function resetView() {
 function start() {
 	for(var i = startingSpace; i < width; i += startingSpace) {
 		for(var j = startingSpace; j < height; j += startingSpace) {
-			var rand = Math.random();
-			particles.push(new Particle({ x: i, y: j }, rand < 0.25 ? "red" : rand < 0.5 ? "blue" : rand < 0.75 ? "green" : "purple"))
+			var colors = Object.keys(colorMapping)
+			var rand = Math.floor(Math.random() * colors.length);
+			particles.push(new Particle({ x: i, y: j }, colors[rand]))
 			
 		}
 	}

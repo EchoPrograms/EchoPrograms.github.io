@@ -1,12 +1,13 @@
 <html>
 	<head>
 		<title>Particle Life</title>
+		<link rel="stylesheet" href="styles.css" type="text/css">
 	</head>
 	<body>
 		
 		
-		<div style="display: flex;  align-items: center;">
-			<span class="rulesContainer" style="margin: 0 10px;">
+		<div class="totalContainer">
+			<span class="rulesContainer">
 				<p id="fps"></p>
 				<p>Starting Particle Distance (lower = more particles):</p>
 				<input type="range" min="15" max="40" value="35" class="slider" id="startingDist"> <span id="particlePrediction"></span>
@@ -18,33 +19,35 @@
 				<input type="number" min="0" max="1" value="0.1" id="frictionHalfLife"> <button id="applyFriction" onclick="applyFriction();">Apply</button>
 				<br>
 				<br>
-				<table id="attractionTable">
-					<tr>  <th></th> <th>Red</th> <th>Green</th> <th>Blue</th> <th>Purple</th> </tr>
-					<tr>  <th>Red</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-					<tr>  <th>Green</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-					<tr>  <th>Blue</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-					<tr>  <th>Purple</th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> <th><input type="number" min="-100" max="100" width="25"></th> </tr>
-				</table>
+				<h3>Attractions:</h3>
+				<button id="toggleTable" onclick="toggleTable()">Show</button>
+				
+				<table id="attractionTable"></table>
 				<button id="random" onclick="random()" type="button">Random</button> 
 				<br>
 				<p>Preset name:</p>
 				<input id="presetName">
 				<button id="savePreset" onclick="savePreset()" type="button">Create Preset</button> 
 				<div  width="50px">
-					<p id="presetStatus"   style="word-break: break-all; max-width: 300px;"></p>
+					<p id="presetStatus" ></p>
 				</div>
 				
 				<input id="presetString">
 				<button id="importPreset" onclick="importPreset()" type="button">Import Preset</button>
 				<br>
 				<br>
-				<p id="presetList"></p>
+				<p>Presets:</p>
+				<select id="presetList"></select>
+				<button id="savePreset" onclick='savePresetFromName(document.getElementById("presetList").value)' type="button">Update Preset</button> 
+					<button id="loadPreset" onclick='loadPreset(document.getElementById("presetList").value)' type="button">Load Preset</button> 
+					<button id="deletePreset" onclick='deletePreset(document.getElementById("presetList").value)' type="button">Delete Preset</button> 
+					<button id="exportPreset" onclick='exportPreset(document.getElementById("presetList").value)' type="button">Export Preset</button>
 				<br>
 				<br>
 				<button onclick="start()" id="start">Start</button><button onclick="stop()" id="stop">Stop</button><button onclick="reset()" id="reset">Reset</button>
 			</span>
-			<canvas id="canvas" width="1000px" height="650px" style=" width="1000px"></canvas>
-			<span style="margin: 0 10px;">
+			<canvas id="canvas" width="1000px" height="650px" ></canvas>
+			<span class="toolsContainer">
 				<h1 id="pauseIndicator"></h1>
 				<p>Zoom:</p>
 				<input type="range" min="0.5" max="10" value="1" class="slider" id="zoom">

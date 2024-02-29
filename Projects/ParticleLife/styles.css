@@ -1,0 +1,16 @@
+.rulesContainer {
+    margin: 0 10px;
+}
+#presetStatus {
+    word-break: break-all; 
+    max-width: 300px;
+}
+#canvas {
+    width: 1000px;
+}
+.toolsContainer {
+    margin: 0 10px;
+}
+.totalContainer {
+    display: flex;  align-items: center;
+}
