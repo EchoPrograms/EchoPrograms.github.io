@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Template</title>
+		<script src="./plotly-2.29.1.min.js"></script>
+	</head>
+	<body>
+		<canavs id="graph"></canavs>
+		
+
+		<button id="showHistory" onclick="plotHistory()">Show History</button><br>
+		<button id="showSortedHistory" onclick="plotStepMaxHistory()">Show Sorted History</button><br>
+		<input id="seed" type="text"><button id="regenerate">Regenerate</button><br>
+		<input id="min" type="text"><input id="max" type="text"><button id="search" onclick="searchRange(parseInt(document.getElementById('min').value),parseInt(document.getElementById('max').value))">Search Range</button>
+		<div id="data">
+			
+		</div>
+		<div style="width: 75%; height: 10px; border: 1px solid black;">
+			<div id="progressBarFiller"  style="background-color: blue; height: 100%; width: 0%;">
+
+			</div>
+		</div><p id="progressBarData"></p>
+		<script src="./script.js"></script>
+	</body>
+</html>
