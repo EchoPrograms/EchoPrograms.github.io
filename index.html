@@ -1,40 +1,61 @@
 <html>
     <head>
-        <title>Home</title>
-        <link rel="stylesheet" href="Stylesheets/home.css">
-        <script type="text/javascript">
-            var title = "Home"
-            var indexes = [];
-            for(var i=0; i < title.length * 2 + 1; i++)
-            {
-                if(i < title.length) {
-                    indexes.push(title.substring(i));
-                    
-                } else if (i == title.length) {
-                    indexes.push("\&\#65279;");
-                } else {
-                    indexes.push(title.substring(0, i - title.length));
-                }
-                console.log(i, indexes)
-            }  
-            var index = 0; 
-            setInterval(()=>{
-                document.querySelector('title').innerHTML = indexes[index % (indexes.length)]; 
-                index++
-            },350)
-        </script>    
+        <title>Neural Network</title>
     </head>
     <body>
-        <nav id="navbar">
-            <ul>
-                <a href="index.html" id="Home"><li>Home</li></a>
-                <a href="Html/projects.html"><li class="page">Projects</li></a>
-                <a href="Html/about.html"><li class="page">About</li></a>
-            </ul>
-        </nav>
-        <div id="bodyContainer">
-            <h1>About this website:</h1>
-            <p>This is a place for my projects and coding ventures.</p>
+        <style>
+            body {
+                background-color: #333;
+            }
+        </style>
+        <div id="graph" style="width:1500px;height: 500px;display: inline; float: left; margin-right: 20px; "> 
+            <div style="display: inline;float: left; padding: 20px;">
+                <span style="color: white;"># of hidden layers  </span><input style="width:50px;" id="layerCount" type="number" value="3"> <button onclick="setLayers()">Set</button><br>
+                <br>
+                <span style="color: white;">Input, 1 neuron</span><br>
+                <div style="color: white;" id="layerUIContainer">
+
+                </div>
+                <span style="color: white;" class="layerDescriptor">Output, 1 neuron, activation: <span class="activationFunctionDropdown"></span></span><br>
+                <button onclick="setLayerContent()">Apply</button>
+                <br>
+                <hr>
+                <span style="color: white;">Epochs: </span><input style="width:70px;" id="epochs" type="number" value="1000"><br>
+                <span style="color: white;">Minimum Learning Rate: </span><input style="width:70px;" id="minimumLearningRate" type="number" value="0.01"><br>
+                <span style="color: white;">Maximum Learning Rate: </span><input style="width:70px;" id="maximumLearningRate" type="number" value="0.015"><br>
+                <span style="color: white;">Epochs per Half Cycle: </span><input style="width:50px;" id="halfCycleEpochs" type="number" value="50"><br>
+                <span style="color: white;">Resolution: </span><input style="width:50px;" id="resolution" type="number" value="0.1"><br>
+                <span style="color: white;">Plot Frequencey: </span><input style="width:50px;" id="plotFrequency" type="number" value="20"><br>
+
+                <button onclick="applyParamaters()">Apply</button><br>
+
+                <ul style="color: white;">
+                    <li><b>Epochs</b>: number of training steps to run per train button press</li>
+                    <li><b>Minimum Learning Rate</b>: the minimum value the learning rate will oscillate to </li>
+                    <li><b>Maximum Learning Rate</b>: the maximum value the learning rate will oscillate to</li>
+                    <li><b>Epochs per Half Cycle</b>: how many epochs it will take for the learning rate to oscillate from min to max, or max to min.</li>
+                    <li><b>Resolution</b>: the step between the functions being sampled</li>
+                    <li><b>Plot Frequencey</b>: how often (in epochs) the cost will be calcuated and the plot will be updated</li>
+                </ul>
+                <hr>
+                <span style="font-family: monospace; color: #aaaaaa;">Goal Function: (x) => {</span><br>
+                <span style="font-family: monospace; color: #aaaaaa;">   return <input id="goalFunction"></span><br>
+                <span style="font-family: monospace; color: #aaaaaa;">}</span><br><br>
+                <button onclick="applyGoalFunction()">Apply</button>
+            </div>
         </div>
+        <button onclick="regen()">Regen</button>
+        <button onclick="train()">Train</button>
+        <button onclick="stopTraining()">Stop training</button>
+        <p style="color: white;" id="cost">Cost: </p>
+        <p style="color: white;" id="trainingData"></p>
+        <p style="color: red;" id="errors"></p>
+        
+
+        <script type="text/javascript" src="ploty.js"></script>
+        <script type="text/javascript" src="scripts/utils.js"></script>
+        <script type="text/javascript" src="scripts/matrix.js"></script>
+        <script type="text/javascript" src="scripts/network.js"></script>
+        <script type="text/javascript" src="index.js"></script>
     </body>
 </html>
