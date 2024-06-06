@@ -1,0 +1,154 @@
+window.onerror = (event) => {logs += event + "<br>"; logger.innerHTML = logs}
+
+var logs = ""
+
+
+
+var graph = document.getElementById('graph');
+var costDisplay = document.getElementById("cost");
+var trainingDataDisplay = document.getElementById("trainingData")
+var logger = document.getElementById("errors")
+
+
+var maxLearningRate = 0.015;
+var minLearningRate = 0.01;
+var halfCycleEpochs = 50;
+var maxEpochs = 1000
+var dimension = [1, 5, 1]
+var activations = ["tanh", "tanh"]
+var goalFunction = (x)=>{return sin(x)}
+
+var epoch = 0;
+
+var options = new NetworkOptions(dimension, activations, -1, 1, -1, 1)
+var network = new Network(options);
+
+
+var goalFunction = (x)=>{return sin(x)}
+var goalOutput = [];
+var xAxis = [];
+
+var step = 0.01;
+var xMin = -10;
+var xMax = 10;
+
+for(var i = xMin; i < xMax; i += step) {
+    xAxis.push(i);
+    goalOutput.push(goalFunction(i));
+}
+var goalOutputMatrix = new Matrix([goalOutput]);
+
+
+function regen() {
+    network = new Network(options);
+    refreshGraphics();
+}
+function refreshGraphics() {
+    
+    var networkOutput = [];
+    for(var i = xMin; i < xMax; i += step) {
+        networkOutput.push(network.forwardPass([[i]]).getMatrixAsArray()[0][0]);
+    }
+    var cost = Matrix.calculateMeanSquareError(new Matrix([networkOutput]), new Matrix([goalOutput]));
+    costDisplay.innerHTML = "Cost: " + cost;
+    Plotly.newPlot( 
+            graph, 
+            [
+                {
+                    x: xAxis,
+                    y: networkOutput 
+                },
+                {
+                    x: xAxis,
+                    y: goalOutput 
+                }
+            ], 
+            {
+                margin: { t: 0 } 
+            } 
+        );
+}
+function train() {
+    epoch = 0;
+    var interval = setInterval(()=>{
+        var gradientData = [];
+        for(var i = 0; i < xAxis.length; i++) {
+            network.forwardPass([[xAxis[i]]])
+            gradientData.push(network.backwardPass(new Matrix([[goalOutput[i]]])))
+        }
+        var learningRateAdjusted = clrTriangular(epoch, halfCycleEpochs, minLearningRate, maxLearningRate)
+        network.trainOnPasses(gradientData, learningRateAdjusted)
+        refreshGraphics()
+        trainingDataDisplay.innerHTML = `Epoch: ${epoch} <br> Learning rate: ${learningRateAdjusted}`
+        if(epoch >= maxEpochs) {
+            clearInterval(interval)
+        }
+        epoch++;
+    }, 0)
+}
+function stopTraining() {
+    epoch = maxEpochs;
+}
+regen()
+
+// HyperParamater GUI
+var activationFunctionList = ["reLU", "leakyReLU", "sigmoid", "tanh", "sin", "cos", "linear"]
+var layerUIContainer = document.getElementById('layerUIContainer');
+var layerCount = document.getElementById('layerCount');
+var layerHTML = `<span style="color: white;" class="layerDescriptor">Hidden Layer, <input style="width:50px;" id="layerCount" type="number" value="5"> neuron(s), activation: <span class="activationFunctionDropdown"></span></span><br>`
+var activationFunctionDropdownHTML; 
+updateActivationDropdown()
+setLayers()
+
+
+
+function setLayers() {
+    var numOfLayers = Math.max(layerCount.value, 0);
+    var tempString = "";
+    for(var i = 0; i < numOfLayers; i++) {
+        tempString += layerHTML
+    }
+    layerUIContainer.innerHTML = tempString
+    var activationFunctionDropdows = document.querySelectorAll('.activationFunctionDropdown');
+    for(var i = 0; i < activationFunctionDropdows.length; i++) {
+        activationFunctionDropdows[i].innerHTML = activationFunctionDropdownHTML;
+    }
+}
+function setLayerContent() {
+    var dimensionsL = [1];
+    var activationsL = [];
+    var layerDescriptors = document.querySelectorAll('.layerDescriptor');
+    for(var i = 0; i < layerDescriptors.length - 1; i++) {
+        dimensionsL.push(parseInt(layerDescriptors[i].childNodes[1].value));
+        activationsL.push(layerDescriptors[i].childNodes[3].childNodes[0].value)
+    }
+    activationsL.push(layerDescriptors[layerDescriptors.length - 1].childNodes[1].childNodes[0].value);
+    dimensionsL.push(1);
+    options = new NetworkOptions(dimensionsL, activationsL, -1, 1, -1, 1)
+    network = new Network(options);
+    refreshGraphics()
+}
+function updateActivationDropdown() {
+    activationFunctionDropdownHTML = "<select>"
+    for(var i = 0; i < activationFunctionList.length; i++) {
+        activationFunctionDropdownHTML += `<option value="${activationFunctionList[i]}">${activationFunctionList[i]}</option>`
+    }
+    activationFunctionDropdownHTML += "</select>"
+}
+function applyParamaters() {
+    maxEpochs = parseInt(document.getElementById("epochs").value);
+    minLearningRate = parseFloat(document.getElementById("minimumLearningRate").value);
+    maxLearningRate = parseFloat(document.getElementById("maximumLearningRate").value);
+    halfCycleEpochs = parseInt(document.getElementById("halfCycleEpochs").value);
+}
+function applyGoalFunction() {
+    var goalFunctionInput = document.getElementById("goalFunction");
+    console.log(goalFunctionInput.value)
+    goalOutput = []
+    for(var x = xMin; x < xMax; x += step) {
+        goalOutput.push(eval(goalFunctionInput.value));
+    }
+    goalOutputMatrix = new Matrix([goalOutput]);
+
+    refreshGraphics()
+}
