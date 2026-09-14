@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRC robotics: software and controls overview · EchoPrograms</title><meta name="description" content="An overview of my work across FRC robot software, drivetrain control, autonomous routines, vision, and mechanisms.">
+<meta property="og:title" content="FRC robotics: software and controls overview · EchoPrograms">
+<meta property="og:description" content="An overview of my work across FRC robot software, drivetrain control, autonomous routines, vision, and mechanisms."><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="../../feed.xml">
+<script src="../../assets/site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
+<a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2026-02-13">2026-02-13</time> / 3 min read</p><h1>FRC robotics: software and controls overview</h1><p class="lede">An overview of my work across FRC robot software, drivetrain control, autonomous routines, vision, and mechanisms.</p><div class="tags"><span class="tag">FRC</span><span class="tag">Java</span><span class="tag">WPILib</span><span class="tag">Controls</span><span class="tag">Robotics</span></div></header><div class="prose"><h2 id="ai-generated-writeups-imported-from-chat-history">AI Generated Writeups Imported from Chat History</h2>
+<h2 id="overview">Overview</h2>
+<p>My FRC work has covered the software and control systems that connect a robot's mechanisms, sensors, autonomous routines, and driver controls. I have worked across drivetrain software, odometry, vision-assisted localization, autonomous path planning, shooter and turret control, telemetry, and debugging with physical hardware.</p>
+<p>This work has required moving between Java code, robotics libraries, control theory, sensor behavior, electrical constraints, and mechanical behavior.</p>
+<h2 id="drivetrain-and-motion">Drivetrain and motion</h2>
+<figure class="topology-figure">
+<div class="topology-scroll" role="region" aria-label="Drivetrain and motion diagram; scroll horizontally on small screens" tabindex="0"><img src="/assets/frc-work-overview.svg" width="900" height="550" loading="lazy" alt="An overview of my FRC work across drivetrain, autonomous routines, vision, controls, telemetry, and hardware integration."></div>
+<figcaption>An overview of my FRC work across drivetrain, autonomous routines, vision, controls, telemetry, and hardware integration. <a href="/assets/frc-work-overview.svg">Open full-size diagram</a>.</figcaption>
+</figure>
+
+<p>I worked with a swerve drivetrain, where each wheel module can control its speed and direction. The software converts the desired chassis motion into module commands and uses module measurements to estimate the robot's movement.</p>
+<p>The drivetrain work included:</p>
+<ul>
+<li>Configuring and controlling swerve modules.</li>
+<li>Working with chassis speeds and module-state conversions.</li>
+<li>Maintaining robot odometry.</li>
+<li>Handling autonomous starting poses.</li>
+<li>Visualizing drivetrain and mechanism state.</li>
+<li>Integrating reusable subsystems into the larger robot program.</li>
+</ul>
+<h2 id="autonomous-routines">Autonomous routines</h2>
+<p>I used PathPlanner and WPILib tools to integrate autonomous paths. Autonomous behavior needed to account for the selected alliance and the robot's starting position, so the same general routine could be interpreted correctly on either side of the field.</p>
+<p>The work involved coordinating path definitions, subsystem commands, pose handling, and the physical behavior of the robot. Library version compatibility was also part of the job; robotics software depends on several packages that need to work together in the same build.</p>
+<h2 id="vision-and-localization">Vision and localization</h2>
+<p>I worked with PhotonVision and AprilTags to obtain vision-based position estimates. Vision measurements can improve localization, but they are not always equally reliable. Lighting, tag visibility, camera pose, and field geometry all affect the quality of a measurement.</p>
+<p>That meant evaluating vision uncertainty instead of treating every camera estimate as equally accurate. Combining wheel odometry with noisy vision data is a systems problem: the estimator needs useful measurements while still trusting the robot's motion model when the camera is uncertain.</p>
+<h2 id="shooter-and-turret-control">Shooter and turret control</h2>
+<p>I also worked on closed-loop mechanisms using REV motor controllers, brushless motors, and encoder feedback. A shooter loses speed when it transfers energy to a game piece, so the controller has to recover quickly without becoming unstable.</p>
+<p>The control work included:</p>
+<ul>
+<li>Investigating RPM droop after firing.</li>
+<li>Combining feedforward with PID feedback.</li>
+<li>Considering a small integral term for recovery error.</li>
+<li>Evaluating derivative behavior and encoder inputs.</li>
+<li>Applying gravity compensation to a rotating mechanism.</li>
+<li>Using logged data to guide tuning decisions.</li>
+</ul>
+<p>Feedforward handles predictable behavior from the mechanism, while feedback corrects the remaining error. The right balance depends on inertia, voltage limits, sensor quality, and the response that the mechanism needs.</p>
+<h2 id="debugging-and-tools">Debugging and tools</h2>
+<p>Telemetry and visualization were important throughout the work. AdvantageKit and AdvantageScope provided ways to record and inspect system state, while the robot libraries supplied the abstractions for devices, commands, and control loops.</p>
+<p>When something did not behave as expected, the investigation could involve code, library versions, encoder configuration, wiring, motor behavior, or the physical mechanism. This made logging and clear subsystem boundaries valuable because they narrowed the problem before making another change.</p>
+<h2 id="scope-and-status">Scope and status</h2>
+<p>The source material describes this as active team work, but does not provide a verified project date or current season status. This page is a general overview of my reported FRC experience, not a claim about a specific robot's competition performance.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>

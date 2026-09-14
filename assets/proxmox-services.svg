@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" role="img" aria-labelledby="title desc">
+  <title id="title">Homelab and cloud service placement</title>
+  <desc id="desc">The five-node local Proxmox cluster hosts LXC infrastructure containers, application virtual machines, and a Docker host. A separate ARM cloud VM hosts Forgejo, Crafty and Minecraft, web applications, cloudflared, and a Portainer agent. Local guest storage belongs to individual Proxmox nodes; OpenMediaVault has a dedicated passed-through disk.</desc>
+  <style>text{font-family:'Fragment Mono',monospace;fill:#dedede;font-size:16px}.heading{font-size:21px;font-weight:bold}.label{font-size:13px;fill:#aaa}.group{fill:#171c1a;stroke:#608d7f}.boundary{fill:#111;stroke:#444}.subhead{fill:#a1c9bb;font-weight:bold}</style>
+  <rect width="900" height="720" fill="#0e0e0e"/>
+  <text x="30" y="39" class="heading">Service placement</text>
+  <text x="30" y="64" class="label">Grouped by hosting environment · documentation snapshot: August 2026</text>
+  <rect class="boundary" x="30" y="90" width="492" height="582" rx="6"/>
+  <text x="50" y="124" class="heading">Local homelab</text>
+  <text x="50" y="150" class="label">Five Proxmox nodes · flat LAN · VM bridges</text>
+  <rect class="group" x="50" y="173" width="452" height="101" rx="4"/>
+  <text x="68" y="202" class="subhead">LXC containers</text>
+  <text x="68" y="230">Pi-hole · Prometheus · Grafana</text>
+  <text x="68" y="253" class="label">DNS and monitoring</text>
+  <rect class="group" x="50" y="290" width="452" height="101" rx="4"/>
+  <text x="68" y="319" class="subhead">Application VMs</text>
+  <text x="68" y="347">Nextcloud · Home Assistant</text>
+  <text x="68" y="371">OpenMediaVault</text>
+  <rect class="group" x="50" y="407" width="452" height="150" rx="4"/>
+  <text x="68" y="436" class="subhead">Docker host VM · Portainer</text>
+  <text x="68" y="464">Matrix Synapse · Element</text>
+  <text x="68" y="490">Nginx Proxy Manager · Homepage</text>
+  <text x="68" y="516">cloudflared</text>
+  <text x="68" y="540" class="label">Application containers and web routing</text>
+  <text x="50" y="589" class="subhead">Storage and host monitoring</text>
+  <text x="50" y="615" class="label">Node-local disks; dedicated disk → OMV VM</text>
+  <text x="50" y="639" class="label">Node Exporter + Proxmox exporter</text>
+  <rect class="boundary" x="546" y="90" width="324" height="582" rx="6"/>
+  <text x="566" y="124" class="heading">Cloud VM</text>
+  <text x="566" y="150" class="label">arminstance · ARM · separate host</text>
+  <rect class="group" x="566" y="173" width="284" height="384" rx="4"/>
+  <text x="584" y="202" class="subhead">Docker services</text>
+  <text x="584" y="240">Forgejo</text>
+  <text x="584" y="263" class="label">Git repositories</text>
+  <text x="584" y="304">Crafty · Minecraft</text>
+  <text x="584" y="327" class="label">Game server infrastructure</text>
+  <text x="584" y="368">TSA · Girls Who Code</text>
+  <text x="584" y="391" class="label">Web applications</text>
+  <text x="584" y="432">cloudflared</text>
+  <text x="584" y="455" class="label">Selected web routes</text>
+  <text x="584" y="496">Portainer agent</text>
+  <text x="584" y="519" class="label">Remote container management</text>
+  <text x="566" y="589" class="subhead">Private administration</text>
+  <text x="566" y="615" class="label">Connected through Tailscale</text>
+  <text x="566" y="639" class="label">Outside the local cluster</text>
+  <text x="30" y="701" class="label">Boxes show service placement, not public exposure or exact guest-to-node assignments.</text>
+</svg>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TNTech CPTC tryout 2026 · EchoPrograms</title><meta name="description" content="A team penetration-testing assessment completed during the 2026 Tennessee Tech CPTC tryout.">
+<meta property="og:title" content="TNTech CPTC tryout 2026 · EchoPrograms">
+<meta property="og:description" content="A team penetration-testing assessment completed during the 2026 Tennessee Tech CPTC tryout."><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="../../feed.xml">
+<script src="../../assets/site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
+<a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="eyebrow">CTF / <time datetime="2026-09-13">2026-09-13</time> / 2 min read</p><h1>TNTech CPTC tryout 2026</h1><p class="lede">A team penetration-testing assessment completed during the 2026 Tennessee Tech CPTC tryout.</p><div class="tags"><span class="tag">CPTC</span><span class="tag">Penetration testing</span><span class="tag">Kubernetes</span><span class="tag">NFS</span><span class="tag">Web security</span></div></header><div class="prose"><h2 id="report">Report</h2>
+<p class="import-label">AI-assisted website writeup</p>
+<p>This website summary was generated with AI from the attached report. The CPTC assessment and the attached penetration-testing report were completed and written by me without AI.</p>
+
+<iframe class="embedded-report" src="/assets/tntech-cptc-tryout-2026.pdf" title="TNTech CPTC Tryout 2026 penetration testing report" loading="lazy"></iframe>
+<p><a href="/assets/tntech-cptc-tryout-2026.pdf" target="_blank" rel="noopener noreferrer">Open the full penetration testing report (PDF)</a></p>
+
+<h2 id="overview">Overview</h2>
+<p>During the 2026 Tennessee Tech CPTC tryout, I completed the assessment individually as Team 20. I performed a network penetration test against the provided Obsidian environment from September 12–13, 2026 using a black-box approach from an external assessment lab.</p>
+<p>The goal was to identify weaknesses in the internal network, confirm their impact, and document repeatable remediation steps in a professional penetration-testing report.</p>
+<h2 id="assessment-approach">Assessment approach</h2>
+<p>I began without credentials or advance knowledge of the target environment. The work moved from discovery and service enumeration into manual validation of weaknesses and impact assessment. Findings were recorded with severity, affected scope, technical impact, business impact, and recommended remediation.</p>
+<p>The report covered an internal network range and cloud infrastructure discovered during testing. I also produced a network diagram, a network inventory, and supporting appendices for compromised users and indicators of compromise.</p>
+<h2 id="findings">Findings</h2>
+<p>The final report documented twelve findings:</p>
+<ul>
+<li>Six critical findings.</li>
+<li>Three high-severity findings.</li>
+<li>Two medium-severity findings.</li>
+<li>One informational observation.</li>
+</ul>
+<p>The most significant themes were credential reuse, exposed or over-permissioned Kubernetes service accounts, credentials exposed through network storage, insecure service credentials, unauthenticated APIs and records, weak NFS permissions, authenticated cross-site scripting, weak password policy, and SSH password authentication.</p>
+<p>The assessment also identified a containerized service layout as a security strength. The segmentation between services and its central management layer provided a useful foundation for applying access controls and hardening changes.</p>
+<h2 id="reporting-and-remediation">Reporting and remediation</h2>
+<p>The report organized remediation by urgency. Immediate work focused on rotating exposed credentials, removing unnecessary service-account permissions, restricting unauthenticated access, and removing sensitive credentials from shared storage. Near-term work included moving SSH to key authentication, restricting NFS clients, removing unneeded service-account tokens, and filtering user-controlled web content. Longer-term work included password audits, vulnerability assessments, and continued administrator and developer security training.</p>
+<p>Writing the report required connecting each technical observation to a concrete risk and a practical fix. The result was a document that could be used by the environment owner to prioritize changes after the assessment.</p>
+<h2 id="result">Result</h2>
+<p>The CPTC tryout gave me practice with the full penetration-testing workflow: black-box discovery, manual validation, impact analysis, severity rating, remediation planning, and professional report writing. It also gave me experience presenting infrastructure, Kubernetes, network storage, authentication, and web-security findings together as one assessment.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>

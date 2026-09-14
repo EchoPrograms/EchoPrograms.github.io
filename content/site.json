@@ -1,0 +1,109 @@
+{
+  "name": "Brogan",
+  "handle": "EchoPrograms",
+  "url": "https://echoprograms.github.io",
+  "github": "EchoPrograms",
+  "projects": [
+    {
+      "title": "Proxmox homelab and private cloud",
+      "category": "Infrastructure",
+      "description": "A five-node Proxmox environment for virtual machines, containers, storage, monitoring, and self-hosted services.",
+      "path": "blog/proxmox-homelab-private-cloud/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/proxmox-homelab-private-cloud.md",
+      "tags": [
+        "Proxmox",
+        "Linux",
+        "Networking",
+        "Storage"
+      ],
+      "art": "cluster",
+      "date": "2025-05-01",
+      "linkLabel": "Read writeup"
+    },
+    {
+      "title": "Particle Life",
+      "category": "Simulation",
+      "description": "A particle simulation with configurable attraction and repulsion between particle types. Includes interaction controls and saved presets.",
+      "path": "Projects/ParticleLife/index.html",
+      "tags": [
+        "JavaScript",
+        "Canvas"
+      ],
+      "art": "particles",
+      "date": "2024-02-27"
+    },
+    {
+      "title": "SysReptor security reporting deployment",
+      "category": "Infrastructure",
+      "description": "A local SysReptor installation accessed through a dedicated Nginx Docker container and hosts-file mapping.",
+      "path": "blog/sysreptor-security-reporting-deployment/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/sysreptor-security-reporting-deployment.md",
+      "tags": [
+        "Docker",
+        "PostgreSQL",
+        "Redis",
+        "Linux"
+      ],
+      "art": "report",
+      "date": "2026-09-07",
+      "linkLabel": "Read writeup"
+    },
+    {
+      "title": "Sand game",
+      "category": "Simulation",
+      "description": "A grid-based falling-sand game. Draw particles in the canvas and adjust the brush size and simulation controls.",
+      "path": "Projects/sandSim/index.html",
+      "tags": [
+        "JavaScript",
+        "p5.js"
+      ],
+      "art": "sand",
+      "date": "2024-02-24"
+    },
+    {
+      "title": "Forgejo self-hosted Git service",
+      "category": "Infrastructure",
+      "description": "A self-hosted Git service for personal repositories, published at git.brogano.dev and integrated into my development workflow.",
+      "path": "https://git.brogano.dev",
+      "writeup": "blog/forgejo-self-hosted-git-service/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/forgejo-self-hosted-git-service.md",
+      "tags": [
+        "Forgejo",
+        "Git",
+        "Docker",
+        "Linux"
+      ],
+      "art": "git",
+      "date": "2026-04-30",
+      "linkLabel": "Open Forgejo"
+    },
+    {
+      "title": "Backpropagated neural network",
+      "category": "Machine learning",
+      "description": "A neural network implemented from scratch in JavaScript. Configure layers, activation functions, and training parameters to fit a function, with Plotly for graphing.",
+      "path": "Projects/JavascriptNeuralNetwork/index.html",
+      "tags": [
+        "JavaScript",
+        "Backpropagation"
+      ],
+      "art": "network",
+      "date": "2024-06-06"
+    },
+    {
+      "title": "TNTech CPTC tryout 2026",
+      "category": "Cybersecurity",
+      "description": "A team black-box penetration-testing assessment covering network discovery, Kubernetes, NFS, authentication, and web security.",
+      "path": "blog/tntech-cptc-tryout-2026/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/tntech-cptc-tryout-2026.md",
+      "tags": [
+        "CPTC",
+        "Penetration testing",
+        "Kubernetes",
+        "NFS"
+      ],
+      "art": "network",
+      "date": "2026-09-13",
+      "linkLabel": "Read writeup"
+    }
+  ]
+}

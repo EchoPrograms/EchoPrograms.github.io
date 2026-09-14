@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxmox homelab and private cloud · EchoPrograms</title><meta name="description" content="A five-node Proxmox environment for virtual machines, containers, storage, monitoring, and self-hosted services.">
+<meta property="og:title" content="Proxmox homelab and private cloud · EchoPrograms">
+<meta property="og:description" content="A five-node Proxmox environment for virtual machines, containers, storage, monitoring, and self-hosted services."><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="../../feed.xml">
+<script src="../../assets/site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
+<a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2025-05-01">2025-05-01</time> / 4 min read</p><h1>Proxmox homelab and private cloud</h1><p class="lede">A five-node Proxmox environment for virtual machines, containers, storage, monitoring, and self-hosted services.</p><div class="tags"><span class="tag">Proxmox</span><span class="tag">Linux</span><span class="tag">Virtualization</span><span class="tag">Networking</span><span class="tag">Storage</span></div></header><div class="prose"><h2 id="ai-generated-writeups-imported-from-chat-history">AI Generated Writeups Imported from Chat History</h2>
+<h2 id="overview">Overview</h2>
+<p>I design and operate a five-node Proxmox VE cluster for personal infrastructure and technical experiments. It provides a single management layer for virtual machines and Linux containers while keeping storage local to each node.</p>
+<p>The environment hosts monitoring, DNS, file storage, communication services, development tools, and other self-hosted applications. It is an active homelab that changes as I add services, test migrations, and investigate reliability problems.</p>
+<h2 id="architecture">Architecture</h2>
+<p>The cluster uses a flat wired LAN and a Proxmox bridge on each node. Nodes have different CPU, memory, and disk capacities, so workloads are placed according to the resources they need:</p>
+<ul>
+<li>A utility node runs Grafana and Prometheus containers.</li>
+<li>A second utility node runs a Home Assistant virtual machine.</li>
+<li>The primary compute node runs the larger application virtual machines, a Portainer-managed Docker host, and the DNS container.</li>
+<li>A storage-focused node runs an OpenMediaVault virtual machine and provides additional local disk pools.</li>
+<li>One cluster member is kept available for cluster membership and future workloads.</li>
+</ul>
+<p>The cluster has quorum and limited high-availability use, but it does not use Ceph or another shared-storage system. This distinction matters: unified management and a healthy quorum do not make every guest disk available on every node.</p>
+<h2 id="virtualization-and-storage">Virtualization and storage</h2>
+<p>I use both QEMU virtual machines and LXC containers. Default guest disks are stored on node-local LVM-thin storage. Additional directory and LVM pools provide space for monitoring data, images, templates, and future workloads. OpenMediaVault receives a dedicated physical disk through the storage node and provides network storage to other systems.</p>
+<p>The storage design is intentionally practical for a small homelab, but it has limitations:</p>
+<ul>
+<li>A guest can only migrate easily when its disk is available to the destination node.</li>
+<li>Local storage creates a dependency on the node that owns a guest's disk.</li>
+<li>Physical-disk passthrough simplifies access to bulk storage but ties that storage to a specific virtual machine and host.</li>
+<li>There are currently no configured backup jobs, so important data needs a separate backup plan.</li>
+</ul>
+<h2 id="network-and-service-topology">Network and service topology</h2>
+<p>The local cluster connects to the LAN and private remote-access network. A separate cloud VM named <code>arminstance</code> runs another Docker service layer; it is connected to the homelab through the private remote-access network rather than being treated as a local Proxmox node.</p>
+<figure class="topology-figure">
+<div class="topology-scroll" role="region" aria-label="Network access diagram; scroll horizontally on small screens" tabindex="0"><img src="/assets/proxmox-network.svg" width="900" height="610" alt="Public visitors reach selected local and cloud web apps through Cloudflare tunnels. Private administration uses Tailscale to reach the local homelab and the separate arminstance cloud VM."></div>
+<figcaption>Public application access and private administration use separate paths. <a href="/assets/proxmox-network.svg">Open full-size network diagram</a>.</figcaption>
+</figure>
+
+<h2 id="services-i-run">Services I run</h2>
+<figure class="topology-figure">
+<div class="topology-scroll" role="region" aria-label="Service placement diagram; scroll horizontally on small screens" tabindex="0"><img src="/assets/proxmox-services.svg" width="900" height="720" alt="Service placement in the five-node Proxmox cluster and the separate ARM cloud VM. The following lists describe the services in each environment."></div>
+<figcaption>Services grouped by environment, with local storage and the separate cloud host shown explicitly. <a href="/assets/proxmox-services.svg">Open full-size service diagram</a>.</figcaption>
+</figure>
+
+<p>The local Proxmox environment provides:</p>
+<ul>
+<li>Proxmox VE for virtualization and cluster management.</li>
+<li>LXC containers for Pi-hole DNS, Prometheus, and Grafana.</li>
+<li>QEMU virtual machines for Nextcloud, Home Assistant, OpenMediaVault, and a Docker/Portainer host.</li>
+<li>Nginx Proxy Manager for reverse-proxying selected applications.</li>
+<li>Matrix Synapse and Element for self-hosted communications.</li>
+<li>A homepage dashboard and cloudflared for selected published routes.</li>
+<li>Node Exporter and the Proxmox exporter for infrastructure monitoring.</li>
+</ul>
+<p>The separate cloud VM, <code>arminstance</code>, provides:</p>
+<ul>
+<li>Forgejo for self-hosted Git repositories.</li>
+<li>Crafty Controller and Minecraft server infrastructure.</li>
+<li>Web applications, including the TSA and Girls Who Code sites.</li>
+<li>Docker-managed services and a separate cloudflared route.</li>
+</ul>
+<p>Remote administration uses a private overlay network. Public application routes are separated from Proxmox management access, so an application can be published or withdrawn without exposing the hypervisor interface.</p>
+<h2 id="monitoring-and-operations">Monitoring and operations</h2>
+<p>Prometheus collects node and service metrics, while Grafana provides dashboards for the cluster and applications. I use the monitoring data alongside Proxmox status, guest-agent information, storage checks, and system logs when diagnosing problems.</p>
+<p>Routine operations include installing updates one node at a time, maintaining quorum during reboots, checking storage capacity and drive health, and verifying guest networking after changes. The documentation also records known gaps, including uneven Proxmox versions, disabled cluster firewall rules, the lack of backups, and the absence of fencing or watchdog configuration.</p>
+<h2 id="current-status">Current status</h2>
+<p>The homelab is active and continuously evolving. The current documentation snapshot confirms a functioning five-node cluster with local storage, monitoring, self-hosted services, and identified resilience work. The next improvements are centered on backup jobs, storage accessibility, firewall policy, version consistency, and repeatable recovery procedures.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>
