@@ -145,7 +145,7 @@ home = f'''<section class="hero" aria-labelledby="intro-title">
 <dt>Security</dt><dd>Hack The Box and authorized CTF labs</dd>
 <dt>Hardware</dt><dd>FRC robotics and ESP32 development</dd>
 </dl></aside></section>
-<section class="section" aria-labelledby="professional-experience"><div class="section-heading"><h2 id="professional-experience">Professional Experience</h2></div><div class="employment-grid">{experience}</div></section>
+<section class="section" aria-labelledby="professional-experience"><div class="section-heading"><h2 id="professional-experience">Professional Experience</h2><a class="text-link" href="https://www.linkedin.com/in/brogan-oberhaus-b2056830b/">LinkedIn ↗</a></div><div class="employment-grid">{experience}</div></section>
 <section class="section" aria-labelledby="work-title"><div class="section-heading"><h2 id="work-title">Projects</h2><a class="text-link" href="portfolio/">View portfolio →</a></div><div class="project-grid">{''.join(card(p,'') for p in site['projects'][:3])}</div></section>
 <section class="section" aria-labelledby="writing-title"><div class="section-heading"><h2 id="writing-title">Writeups</h2><a class="text-link" href="blog/">All writeups →</a></div><p class="section-description">Project documentation, CTF walkthroughs, and technical notes.</p>{''.join(post_row(p,'') for p in posts[:3]) or empty}</section>
 <section class="section" aria-labelledby="activity-title"><div class="section-heading"><h2 id="activity-title">GitHub activity</h2></div>
