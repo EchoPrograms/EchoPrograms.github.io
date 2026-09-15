@@ -4,12 +4,14 @@ from html import escape as esc
 from urllib.parse import quote
 from datetime import date
 import json
+import hashlib
 import re
 import xml.etree.ElementTree as ET
 import markdown
 from content import public_link
 
 ROOT = Path(__file__).resolve().parent.parent
+asset_versions = {name: hashlib.sha256((ROOT / 'assets' / name).read_bytes()).hexdigest()[:12] for name in ('site.css', 'site.js')}
 site = json.loads((ROOT / 'content/site.json').read_text())
 for project in site['projects']:
     date.fromisoformat(project['date'])
@@ -55,10 +57,10 @@ def shell(title, description, content, active='', prefix='../'):
 <title>{esc(title)} · {esc(site['handle'])}</title><meta name="description" content="{esc(description, quote=True)}">
 <meta property="og:title" content="{esc(title, quote=True)} · {esc(site['handle'], quote=True)}">
 <meta property="og:description" content="{esc(description, quote=True)}"><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
-<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="{prefix}assets/site.css">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="{prefix}assets/site.css?v={asset_versions['site.css']}">
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="{prefix}feed.xml">
-<script src="{prefix}assets/site.js" defer></script></head>
+<script src="{prefix}assets/site.js?v={asset_versions['site.js']}" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
 <a class="wordmark" href="{prefix}">EchoPrograms</a><div class="nav-links">{links}<a href="https://github.com/{esc(site['github'])}">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
 <main id="main" class="container">{content}</main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="{prefix}feed.xml">Atom feed</a><a href="{prefix}legacy/index.html">Legacy site ↗</a><a href="{prefix}ai-use/">AI use</a><a href="https://github.com/{esc(site['github'])}/EchoPrograms.github.io">Source ↗</a></div></footer></body></html>'''
@@ -157,7 +159,7 @@ home = f'''<section class="hero" aria-labelledby="intro-title">
 <p class="status" data-chart-error role="status" hidden>Contribution graph unavailable. View the current graph on GitHub.</p></div></article>
 </div></section>
 <section class="about section" id="about" aria-labelledby="about-title"><h2 id="about-title">About</h2>
-<p>I started programming with web development at age seven. Since then, I've worked with software, Linux administration, networking, robotics, and embedded hardware. Arch, Neovim, and <button type="button" class="kieran">Kieran</button> btw.</p>
+<p>I started programming with web development at age seven. Since then, I've worked with software, Linux administration, networking, robotics, and embedded hardware. Arch, Neovim, and <span class="kieran-wrap"><button type="button" class="kieran">Kieran</button></span> btw.</p>
 <div class="experience-grid">
 <div><h3>Linux and infrastructure</h3><p>I use Proxmox, KVM/QEMU, and Docker in my homelab. My work includes virtual-machine networking, storage, DNS, reverse proxies, and maintaining self-hosted services.</p></div>
 <div><h3>Cybersecurity</h3><p>I practice web enumeration, Linux privilege escalation, and binary-exploitation fundamentals in authorized labs and CTFs. I'm also interested in embedded reverse engineering, hardware-backed authentication, and isolated security environments.</p></div>
