@@ -44,7 +44,7 @@
         "Redis",
         "Linux"
       ],
-      "art": "report",
+      "art": "sysreptor",
       "date": "2026-09-07",
       "linkLabel": "Read writeup"
     },
@@ -92,7 +92,7 @@
     {
       "title": "TNTech CPTC tryout 2026",
       "category": "Cybersecurity",
-      "description": "A team black-box penetration-testing assessment covering network discovery, Kubernetes, NFS, authentication, and web security.",
+      "description": "An individual black-box penetration-testing assessment covering network discovery, Kubernetes, NFS, authentication, and web security.",
       "path": "blog/tntech-cptc-tryout-2026/index.html",
       "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/tntech-cptc-tryout-2026.md",
       "tags": [
@@ -101,8 +101,55 @@
         "Kubernetes",
         "NFS"
       ],
-      "art": "network",
+      "art": "report",
       "date": "2026-09-13",
+      "linkLabel": "Read writeup"
+    },
+    {
+      "title": "noVNC local CTF workstation",
+      "category": "Cybersecurity",
+      "description": "A browser-accessible Linux workstation for authorized labs and CTFs, available locally at pwnbox.brogano.dev through my Tailnet.",
+      "path": "blog/novnc-local-ctf-workstation/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/novnc-local-ctf-workstation.md",
+      "tags": [
+        "Linux",
+        "Docker",
+        "VNC",
+        "noVNC",
+        "CTF"
+      ],
+      "image": "assets/novnc-project.svg",
+      "art": "report",
+      "date": "2026-08-04",
+      "linkLabel": "Read writeup"
+    },
+    {
+      "title": "Mobile Linux virtualization with Termux and QEMU",
+      "category": "Virtualization",
+      "description": "Running Linux virtual machines and container workloads on Android with Termux and QEMU, managed through a Portainer Agent over Tailscale.",
+      "path": "blog/mobile-linux-termux-qemu/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/mobile-linux-termux-qemu.md",
+      "tags": [
+        "Android",
+        "Termux",
+        "QEMU",
+        "Docker",
+        "Tailscale"
+      ],
+      "image": "assets/mobile-linux-docker.svg",
+      "art": "report",
+      "date": "2026-09-09",
+      "linkLabel": "Read writeup"
+    },
+    {
+      "title": "Hardware-backed Linux authentication",
+      "category": "Cybersecurity",
+      "description": "Integrating a YubiKey 5C with OpenSSH, sudo, and Hyprlock for hardware-backed Linux authentication.",
+      "path": "blog/hardware-backed-linux-authentication/index.html",
+      "source": "https://github.com/EchoPrograms/EchoPrograms.github.io/blob/main/content/posts/hardware-backed-linux-authentication.md",
+      "tags": ["Linux", "YubiKey", "FIDO2", "OpenSSH", "PAM"],
+      "image": "assets/yubikey-project.svg",
+      "date": "2026-08-26",
       "linkLabel": "Read writeup"
     }
   ]

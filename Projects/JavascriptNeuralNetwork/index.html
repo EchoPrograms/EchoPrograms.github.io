@@ -1,15 +1,20 @@
 <html>
     <head>
+        <meta charset="utf-8">
         <title>Neural Network</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../../assets/demo.css">
     </head>
     <body>
+        <header class="demo-header"><a href="../../portfolio/">← Back to projects</a><h1>Backpropagated neural network</h1></header>
+        <main class="demo-workspace" tabindex="0" aria-label="Neural network controls and graph; scroll to explore">
         <style>
             body {
                 background-color: #333;
             }
         </style>
-        <div id="graph" style="width:1000px;height: 500px;display: inline; float: left; margin-right: 20px; "> 
-            <div style="display: inline;float: left; padding: 20px;">
+        <div class="demo-plot-scroll" tabindex="0" aria-label="Neural network plot; scroll horizontally to explore"><div id="graph" style="width:1000px;height:500px;"></div></div>
+            <div class="demo-controls">
                 <span style="color: white;">Goal Function: </span><input id="showGoalFunction" type="checkbox" checked="true">    
                 <br>
                 <span style="color: white;">Network Output: </span><input id="showNetworkOutput" type="checkbox" checked="true">    
@@ -30,7 +35,7 @@
                 <span style="color: white;">Maximum Learning Rate: </span><input style="width:70px;" id="maximumLearningRate" type="number" value="0.015"><br>
                 <span style="color: white;">Epochs per Half Cycle: </span><input style="width:50px;" id="halfCycleEpochs" type="number" value="50"><br>
                 <span style="color: white;">Resolution: </span><input style="width:50px;" id="resolution" type="number" value="0.1"><br>
-                <span style="color: white;">Plot Frequencey: </span><input style="width:50px;" id="plotFrequency" type="number" value="20"><br>
+                <span style="color: white;">Plot Frequency: </span><input style="width:50px;" id="plotFrequency" type="number" value="20"><br>
 
                 <button onclick="applyParamaters()">Apply</button><br>
 
@@ -40,7 +45,7 @@
                     <li><b>Maximum Learning Rate</b>: the maximum value the learning rate will oscillate to</li>
                     <li><b>Epochs per Half Cycle</b>: how many epochs it will take for the learning rate to oscillate from min to max, or max to min.</li>
                     <li><b>Resolution</b>: the step between the functions being sampled</li>
-                    <li><b>Plot Frequencey</b>: how often (in epochs) the cost will be calcuated and the plot will be updated</li>
+                    <li><b>Plot Frequency</b>: how often (in epochs) the cost is calculated and the plot is updated</li>
                 </ul>
                 <hr>
                 <span style="font-family: monospace; color: #aaaaaa;">Goal Function: (x) => {</span><br>
@@ -52,7 +57,6 @@
                 <p id="exportLocation" style="color: white; width: 500px; word-break: break-all;"></p>
                 <textarea id="importString" rows="10" cols="20"></textarea><button onclick="importNet()">import</button>
             </div>
-        </div>
         <button onclick="refreshGraphics()">Refresh</button><br><br>
 
         <button onclick="regen()">Regen</button>
@@ -68,5 +72,6 @@
         <script type="text/javascript" src="scripts/matrix.js"></script>
         <script type="text/javascript" src="scripts/network.js"></script>
         <script type="text/javascript" src="index.js"></script>
+        </main>
     </body>
 </html>

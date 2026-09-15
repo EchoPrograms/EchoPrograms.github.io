@@ -3,7 +3,7 @@
   "date": "2026-09-13",
   "category": "CTF",
   "tags": ["CPTC", "Penetration testing", "Kubernetes", "NFS", "Web security"],
-  "summary": "A team penetration-testing assessment completed during the 2026 Tennessee Tech CPTC tryout.",
+  "summary": "An individual penetration-testing assessment completed as Team 20 during the 2026 Tennessee Tech CPTC tryout.",
   "slug": "tntech-cptc-tryout-2026",
   "imported": false
 }

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browser-accessible noVNC CTF workstation · EchoPrograms</title><meta name="description" content="A local browser-accessible Linux workstation for Hack The Box and other authorized CTFs.">
+<meta property="og:title" content="Browser-accessible noVNC CTF workstation · EchoPrograms">
+<meta property="og:description" content="A local browser-accessible Linux workstation for Hack The Box and other authorized CTFs."><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="../../feed.xml">
+<script src="../../assets/site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
+<a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2026-08-04">2026-08-04</time> / 2 min read</p><h1>Browser-accessible noVNC CTF workstation</h1><p class="lede">A local browser-accessible Linux workstation for Hack The Box and other authorized CTFs.</p><div class="tags"><span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">VNC</span><span class="tag">noVNC</span><span class="tag">CTF</span></div></header><div class="prose"><h2 id="overview">Overview</h2>
+<p>I built a browser-accessible Linux workstation for Hack The Box and other authorized CTFs. The workstation uses VNC for the desktop session, noVNC for the browser client, and websockify to connect the browser session to the VNC server.</p>
+<p>This is a local box rather than a public hosted service. It is available at <a href="https://pwnbox.brogano.dev" target="_blank" rel="noopener noreferrer">pwnbox.brogano.dev</a>, a hostname that is accessible only through my Tailnet.</p>
+<figure class="topology-figure">
+<div class="topology-scroll"><img class="writeup-image" src="/assets/novnc-workstation.png" alt="Parrot Linux desktop displayed through the pwnbox.brogano.dev browser workstation." width="1672" height="1102" loading="lazy"></div>
+<figcaption>The browser-accessible Parrot Linux workstation used for local CTF work.</figcaption>
+</figure>
+
+<h2 id="setup">Setup</h2>
+<p>The environment runs in Docker and provides a Linux desktop that can be opened from a browser. The setup work included:</p>
+<ul>
+<li>Configuring a VNC display and desktop session.</li>
+<li>Selecting a usable desktop resolution.</li>
+<li>Serving the noVNC client through websockify.</li>
+<li>Routing the Tailnet hostname to the local workstation.</li>
+<li>Testing the interface from desktop and mobile browsers.</li>
+</ul>
+<p>noVNC runs in the browser and communicates with the VNC server through websockify. This lets me access the desktop without installing a native VNC client on each device.</p>
+<figure class="topology-figure">
+<div class="topology-scroll" role="region" aria-label="Workstation connection diagram; scroll horizontally on small screens" tabindex="0"><img src="/assets/novnc-workstation.svg" alt="Diagram showing a Tailnet browser connecting to noVNC, websockify, a VNC server, and the Linux CTF workstation." width="900" height="430" loading="lazy"></div>
+<figcaption>Connection path from the Tailnet browser to the local Linux desktop. <a href="/assets/novnc-workstation.svg">Open full-size diagram</a>.</figcaption>
+</figure>
+
+<h2 id="testing">Testing</h2>
+<p>Desktop testing confirmed that the Linux desktop could be loaded through the browser route. Mobile testing exposed a separate usability concern: a client can display the desktop background while still failing to handle interactive input correctly.</p>
+<p>That made viewport sizing, touch input, scaling, and session configuration part of the workstation design rather than treating them as cosmetic browser details.</p>
+<h2 id="use">Use</h2>
+<p>The workstation gives me a consistent local environment for authorized Hack The Box labs and other CTF exercises. Keeping it on the Tailnet limits access to my own devices while still allowing browser access when I am working from a different computer or tablet.</p>
+<h2 id="result">Result</h2>
+<p>The project combines Linux desktop hosting, Docker, VNC, WebSockets, browser-based remote access, and private network routing into one reusable CTF workstation.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>

@@ -9,7 +9,6 @@
 }
 ---
 
-## AI Generated Writeups Imported from Chat History
 
 ## Overview
 

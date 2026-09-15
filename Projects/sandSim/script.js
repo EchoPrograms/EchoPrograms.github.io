@@ -4,7 +4,7 @@ function setup() {
 	var screenWidth = 1350;
 	var screenHeight = 600;
 	var pixelWidth = 5;
-  	createCanvas(screenWidth, screenHeight);
+	createCanvas(screenWidth, screenHeight).parent('sand-workspace');
 	canvas.style.border = "1px black solid"
 	createArray(screenArray, height / pixelWidth, width / pixelWidth)
 }

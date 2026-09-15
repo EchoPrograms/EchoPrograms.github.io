@@ -1,0 +1,25 @@
+@import url('./site.css');
+
+body { background: var(--bg) !important; color: var(--text); padding: 24px; }
+.demo-header { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.demo-header h1 { font-size: 24px; margin: 0; }
+.demo-header a { color: var(--accent); padding-block: 8px; font-size: 13px; }
+.demo-workspace { max-width: 100%; overflow: auto; padding: 4px; }
+.demo-plot-scroll { max-width: 100%; overflow-x: auto; margin-bottom: 24px; }
+.demo-controls { padding: 20px; border: 1px solid var(--line); background: var(--panel); margin-bottom: 20px; }
+.demo-controls p { max-width: 100%; }
+.demo-controls li { margin-bottom: 8px; }
+button, input, select, textarea { font-family: 'Fragment Mono', monospace; color: var(--text); background: #191919; border: 1px solid #555; padding: 7px; max-width: 100%; }
+button, select { min-height: 44px; margin: 3px 0; }
+button:hover { border-color: var(--accent); }
+input[type=range] { min-height: 36px; }
+input[type=checkbox] { min-width: 20px; min-height: 20px; }
+.totalContainer { font-family: inherit; align-items: start; }
+.rulesContainer, .toolsContainer { flex-shrink: 0; background: var(--panel); border: 1px solid var(--line); padding: 20px; }
+.totalContainer canvas { flex-shrink: 0; }
+@media (max-width: 700px) {
+  body { padding: 16px; }
+  .demo-header { gap: 8px; flex-direction: column; align-items: flex-start; }
+  .totalContainer { flex-direction: column; gap: 20px; }
+  .rulesContainer, .toolsContainer { width: calc(100vw - 48px); margin: 0; }
+}

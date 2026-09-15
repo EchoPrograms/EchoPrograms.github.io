@@ -84,6 +84,8 @@ def art(kind):
     elif kind == 'git':
         shapes = '<path d="M93 142H265M93 142V49M93 112C93 86 190 106 190 72V49M190 72C190 101 265 90 265 119V142" fill="none" stroke-width="2"/>'
         shapes += ''.join(f'<circle cx="{x}" cy="{y}" r="6" fill="#243b33" stroke-width="1.5"/>' for x,y in [(93,49),(93,93),(93,142),(150,142),(208,142),(265,142),(190,49),(190,72)])
+    elif kind == 'sysreptor':
+        shapes = '<rect x="62" y="62" width="86" height="66" rx="3" fill="#15201d"/><rect x="212" y="62" width="86" height="66" rx="3" fill="#15201d"/><path d="M148 95H212" fill="none" stroke-width="2"/><path d="M79 81h52m-52 14h38m-38 14h45M229 81h52m-52 14h38m-38 14h45" fill="none" stroke="#a1c9bb"/><circle cx="158" cy="95" r="4"/><circle cx="202" cy="95" r="4"/>'
     elif kind == 'report':
         shapes = '<path d="M123 33H211L237 59V157H123Z" fill="#15201d" stroke-width="1.2"/><path d="M211 33V59H237" fill="none"/>'
         for y in [78, 104, 130]:
@@ -120,7 +122,7 @@ def card(p, prefix):
     if p.get('writeup'):
         action_url = p['writeup'] if p['writeup'].startswith('https://') else prefix + quote(p['writeup'], safe='/#?=&')
         open_label = 'Open writeup'
-    visual = (f'<img class="project-image" src="{prefix}{quote(p["image"])}" alt="{esc(p["title"], quote=True)} screenshot" loading="lazy">'
+    visual = (f'<img class="project-image" src="{prefix}{quote(p["image"])}" alt="" loading="lazy">'
               if p.get('image') else art(p.get('art', 'code')))
     return f'''<article class="project-card"><a class="art-link" tabindex="-1" aria-hidden="true" href="{esc(demo, quote=True)}">{visual}</a><div class="card-body"><span class="eyebrow">{esc(p['category'])}</span><h3><a class="project-primary" href="{esc(demo, quote=True)}">{esc(p['title'])}</a></h3><time class="project-date" datetime="{project_date.isoformat()}">{display_date}</time><p>{esc(p['description'])}</p><div class="tags">{tags(p['tags'])}</div><div class="project-links"><a href="{esc(action_url, quote=True)}">{esc(open_label)} →</a>{source_link}</div></div></article>'''
 
@@ -132,7 +134,7 @@ def post_row(p, prefix):
 empty = '<div class="empty-state"><p>No writeups published yet.</p></div>'
 experience = markdown.markdown((ROOT / 'content/pages/professional-experience.md').read_text(), extensions=['fenced_code', 'tables', 'md_in_html'])
 home = f'''<section class="hero" aria-labelledby="intro-title">
-<div><h1 id="intro-title">Brogan</h1>
+<div><h1 id="intro-title">Brogan Oberhaus</h1>
 <p class="hero-description">I'm a cybersecurity student interested in software development, pentesting, reverse engineering, embedded security, Linux systems, robotics, and embedded hardware development.</p>
 <p class="hero-description">This site contains my programming projects and technical writeups.</p>
 <div class="actions"><a class="button" href="portfolio/">View projects</a><a class="text-link" href="blog/">Read writeups →</a></div></div>
@@ -163,8 +165,8 @@ home = f'''<section class="hero" aria-labelledby="intro-title">
 <div><h3>Embedded systems</h3><p>I've worked with ESP32 development, PlatformIO, servos, sensors, and GPIO. My interests include integrating firmware with mechanical and electronic hardware.</p></div>
 </div></section>'''
 (ROOT / 'index.html').write_text(shell('Portfolio & writeups', 'Brogan’s programming portfolio, project notes, and CTF writeups. JavaScript experiments, systems, and security.', home, 'Home', './'))
-portfolio = f'''<section class="page-intro"><h1>Projects</h1><p>Programming projects with interactive demos and source code.</p></section><div class="project-grid portfolio-grid">{''.join(card(p,'../') for p in site['projects'])}</div><p class="archive-note"><a class="text-link" href="../legacy/Html/projects.html">Older projects are in the legacy archive →</a></p>'''
-(ROOT / 'portfolio/index.html').write_text(shell('Portfolio', 'Interactive programming projects by Brogan: Particle Life, a sand game, and a backpropagated neural network.', portfolio, 'Portfolio'))
+portfolio = f'''<section class="page-intro"><h1>Projects</h1><p>Software, infrastructure, and security projects, with demos and technical writeups.</p></section><div class="project-grid portfolio-grid">{''.join(card(p,'../') for p in site['projects'])}</div><p class="archive-note"><a class="text-link" href="../legacy/Html/projects.html">Older projects are in the legacy archive →</a></p>'''
+(ROOT / 'portfolio/index.html').write_text(shell('Portfolio', 'Software, infrastructure, and security projects by Brogan Oberhaus.', portfolio, 'Portfolio'))
 blog = f'''<section class="page-intro"><h1>Writeups</h1><p>Project documentation, CTF walkthroughs, and technical notes.</p></section><div class="blog-tools" hidden><div class="filters" role="group" aria-label="Filter writeups">{''.join(f'<button type="button" data-filter="{x}" aria-pressed="{str(x == "All").lower()}">{x}</button>' for x in ['All','Project','CTF','Notes'])}</div><label class="search"><span class="sr-only">Search writeups</span><input type="search" id="post-search" placeholder="Search writeups…"></label></div><div id="post-list">{''.join(post_row(p,'../') for p in posts) or empty}</div><p id="filter-status" class="status" role="status"></p><div id="no-results" class="empty-state" hidden><h2>No matching writeups.</h2><p>Try another search or category.</p></div>'''
 (ROOT / 'blog/index.html').write_text(shell('Writeups', 'Project documentation, CTF walkthroughs, and technical notes by Brogan.', blog, 'Writeups'))
 for p in posts:

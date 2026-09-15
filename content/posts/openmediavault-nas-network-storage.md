@@ -9,11 +9,10 @@
 }
 ---
 
-## AI Generated Writeups Imported from Chat History
 
 ## Overview
 
-I created an OpenMediaVault virtual machine inside Proxmox to manage several physical storage devices and provide network storage to other systems. The project sits at the intersection of virtualization, Linux storage, filesystem layout, permissions, and network file sharing.
+I created an OpenMediaVault virtual machine inside Proxmox to manage physical storage devices, filesystems, permissions, and network shares for other systems.
 
 The goal was to keep storage management in one place while allowing other machines and virtual guests to use selected shares over the network. The design also separates primary and backup storage so that not every disk has the same role.
 

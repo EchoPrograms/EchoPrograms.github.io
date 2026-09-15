@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile Linux virtualization with Termux and QEMU · EchoPrograms</title><meta name="description" content="Running Linux virtual machines on Android with Termux and QEMU, with a Portainer Agent connected over Tailscale.">
+<meta property="og:title" content="Mobile Linux virtualization with Termux and QEMU · EchoPrograms">
+<meta property="og:description" content="Running Linux virtual machines on Android with Termux and QEMU, with a Portainer Agent connected over Tailscale."><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="../../feed.xml">
+<script src="../../assets/site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
+<a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2026-09-09">2026-09-09</time> / 1 min read</p><h1>Mobile Linux virtualization with Termux and QEMU</h1><p class="lede">Running Linux virtual machines on Android with Termux and QEMU, with a Portainer Agent connected over Tailscale.</p><div class="tags"><span class="tag">Android</span><span class="tag">Termux</span><span class="tag">QEMU</span><span class="tag">Linux</span><span class="tag">Virtualization</span><span class="tag">Tailscale</span></div></header><div class="prose"><h2 id="overview">Overview</h2>
+<p>I experimented with running full Linux virtual machines on an Android phone through Termux and QEMU. The guests included Debian and Alpine Linux on both ARM and x86 targets.</p>
+<p>The project combines mobile Linux tooling, manual virtual-machine booting, virtual disks, and user-mode networking. I also got a Portainer Agent running on the environment and connected it to my main Portainer instance over Tailscale.</p>
+<h2 id="virtual-machine-setup">Virtual machine setup</h2>
+<p>The work included booting Linux kernels with an initramfs and kernel command-line parameters, using serial consoles, and installing operating systems without a graphical interface. I worked with QCOW2 and raw disk images, VirtIO devices, DHCP, and QEMU user-mode networking with host-port forwarding.</p>
+<figure class="topology-figure">
+<div class="topology-scroll" role="region" aria-label="Mobile Linux diagram; scroll horizontally on small screens" tabindex="0"><img src="/assets/mobile-linux-termux-qemu.svg" width="900" height="430" loading="lazy" alt="Diagram showing an Android phone running Termux and QEMU with a Linux virtual machine, Portainer Agent, and Tailscale connection to the main Portainer instance."></div>
+<figcaption>Mobile Linux environment and its Portainer management connection. <a href="/assets/mobile-linux-termux-qemu.svg">Open full-size diagram</a>.</figcaption>
+</figure>
+
+<h2 id="portainer-management">Portainer management</h2>
+<p>The environment runs a Portainer Agent that is connected to my main Portainer instance over Tailscale. This gives the mobile environment a private management path through the tailnet while keeping the agent separate from the main Portainer server.</p>
+<h2 id="result">Result</h2>
+<p>The experiment produced a usable Linux virtualization environment on Android and a way to manage its container workloads from my existing Portainer deployment. It also gave me practical experience with ARM and x86 guests, manual Linux boot parameters, virtual storage formats, and QEMU networking constraints on a mobile device.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>

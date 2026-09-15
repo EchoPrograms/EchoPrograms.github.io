@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc">
+  <title id="title">Docker on a phone</title>
+  <desc id="desc">A phone containing a Docker whale drawn with muted green fills and outlines.</desc>
+  <rect width="900" height="500" fill="#0a0f0d"/>
+  <rect x="315" y="24" width="270" height="452" rx="34" fill="#15201d" stroke="#78a99a" stroke-width="3"/>
+  <rect x="335" y="76" width="230" height="350" rx="8" fill="#0b1210"/>
+  <rect x="410" y="46" width="90" height="10" rx="5" fill="#4f7568"/>
+  <circle cx="450" cy="449" r="10" fill="#4f7568"/>
+  <g fill="#243b33" stroke="#78a99a" stroke-width="2" stroke-linejoin="round" transform="translate(350 170)">
+    <rect x="15" y="60" width="26" height="23" rx="2"/>
+    <rect x="47" y="60" width="26" height="23" rx="2"/>
+    <rect x="79" y="60" width="26" height="23" rx="2"/>
+    <rect x="111" y="60" width="26" height="23" rx="2"/>
+    <rect x="47" y="31" width="26" height="23" rx="2"/>
+    <rect x="79" y="31" width="26" height="23" rx="2"/>
+    <rect x="111" y="31" width="26" height="23" rx="2"/>
+    <rect x="111" y="2" width="26" height="23" rx="2"/>
+    <path d="M8 92H150C165 92 174 86 176 77C166 69 163 57 168 45C180 52 187 62 186 74C194 70 202 71 208 75C203 87 192 94 179 94C167 137 138 163 86 163C39 163 12 141 8 92Z" fill="#15201d"/>
+    <circle cx="42" cy="108" r="3" fill="#a1c9bb" stroke="none"/>
+  </g>
+</svg>

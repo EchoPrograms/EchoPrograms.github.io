@@ -9,8 +9,7 @@
 <script src="../../assets/site.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
 <a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
-<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2026-04-30">2026-04-30</time> / 1 min read</p><h1>Forgejo self-hosted Git service</h1><p class="lede">Hosting personal Git repositories with Forgejo and integrating them into my development workflow.</p><div class="tags"><span class="tag">Forgejo</span><span class="tag">Git</span><span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">Self-hosting</span></div></header><div class="prose"><h2 id="ai-generated-writeups-imported-from-chat-history">AI Generated Writeups Imported from Chat History</h2>
-<h2 id="overview">Overview</h2>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2026-04-30">2026-04-30</time> / 1 min read</p><h1>Forgejo self-hosted Git service</h1><p class="lede">Hosting personal Git repositories with Forgejo and integrating them into my development workflow.</p><div class="tags"><span class="tag">Forgejo</span><span class="tag">Git</span><span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">Self-hosting</span></div></header><div class="prose"><h2 id="overview">Overview</h2>
 <p>I deployed Forgejo as a self-hosted Git service for hosting personal repositories and importing existing projects. It provides a private development platform under my control and gives my repositories a consistent place to live alongside the rest of my infrastructure.</p>
 <p>The service runs in Docker on my cloud VM, <code>arminstance</code>, with web access through Cloudflare Tunnel. The Forgejo web interface provides repository browsing, account management, and project administration.</p>
 <h2 id="setup">Setup</h2>
@@ -25,11 +24,11 @@
 <li>Importing existing repositories into the service.</li>
 <li>Configuring repository and account access.</li>
 <li>Creating personal access tokens for Git operations that require them.</li>
-<li>Publishing Forgejo through a reverse proxy and domain route.</li>
+<li>Publishing Forgejo through Cloudflare Tunnel at git.brogano.dev.</li>
 <li>Integrating the service into my normal development workflow.</li>
 </ul>
 <p>When repositories were imported, I also checked author identity and contribution activity. Git records the author email in each commit, so the email configured in a repository affects how contributions are attributed in Forgejo and other Git hosting tools.</p>
 <h2 id="access">Access</h2>
 <p>The Forgejo instance is available at <a href="https://git.brogano.dev" target="_blank" rel="noopener noreferrer">git.brogano.dev</a>.</p>
 <h2 id="result">Result</h2>
-<p>Forgejo gives me a self-hosted Git service for maintaining repositories, reviewing project history, and managing development access. The project combines Git administration with Linux service hosting, reverse-proxy configuration, repository migration, and identity management.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>
+<p>Forgejo gives me a self-hosted Git service for maintaining repositories, reviewing project history, and managing development access.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>

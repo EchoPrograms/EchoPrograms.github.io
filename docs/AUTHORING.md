@@ -58,7 +58,7 @@ Edit its object in `content/site.json`, then save and refresh the helper preview
 | `source` | Optional public source-repository HTTPS URL |
 | `writeup` | Optional article path, such as `blog/forgejo-self-hosted-git-service/index.html`. The card opens `path`; its bottom action becomes “Open writeup”. |
 | `image` | Optional screenshot path under `assets/` |
-| `art` | Illustration when there is no image: `code`, `particles`, `sand`, `network`, `cluster`, `git`, or `report` |
+| `art` | Illustration when there is no image: `code`, `particles`, `sand`, `network`, `cluster`, `git`, `sysreptor`, or `report` |
 
 For a local demo, the source link defaults to its folder in this GitHub repository. For an external demo, the source link is shown only when you supply `source`.
 

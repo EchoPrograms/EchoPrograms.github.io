@@ -20,9 +20,9 @@ Preserving the demos during this redesign does not establish whether AI was used
 
 ## Writeups
 
-The Proxmox homelab writeup was imported from project information and documentation I provided. It is labeled **AI Generated Writeups Imported from Chat History** and reviewed for accuracy. It is a generated summary of my supplied material, not evidence that AI performed the underlying homelab work.
+Writeups imported from my chat history and project documentation are labeled **AI Generated Writeups Imported from Chat History**. AI organized and drafted these summaries from material I supplied, and I review them for accuracy. The label describes how the website article was written; it does not describe how the underlying project was completed.
 
-AI also created the publishing tools and starter templates. A template is not a completed walkthrough or evidence of solving a challenge. The Isolated CTF and Security Lab Platform is intentionally not included as a writeup. The FRC overview is a writeup only and is not listed as a project card.
+The CPTC tryout article is an AI-generated summary of my report. I completed the assessment and wrote the attached penetration-testing report without AI. That distinction is also stated in the article.
 
 If AI is used for a future writeup, its role should be disclosed in that post, including whether it helped with editing, code, analysis, or the underlying work. This page does not label future posts as AI-free.
 
@@ -30,8 +30,6 @@ If AI is used for a future writeup, its role should be disclosed in that post, i
 
 GitHub repository and follower counts come from the public GitHub API. The contribution graph is loaded from a third-party chart service using the public GitHub username. These values are retrieved, not invented by AI, and can be delayed or unavailable because of caching or service failures.
 
-## Testing and privacy
+## Testing
 
 Codex ran build and behavior checks, checked local links, and inspected desktop and mobile previews during the redesign. Those checks do not guarantee that the site is free of bugs or accessibility issues.
-
-The site remains static and contains no API credentials for these integrations. The background export was not copied into the public site. Deployment packages exclude draft sources and authoring documents. Automated credential-pattern checks help catch recognizable secrets, but public content still needs review before publication.

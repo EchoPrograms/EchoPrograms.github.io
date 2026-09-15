@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Hardware-backed Linux authentication</title>
+  <desc id="desc">A YubiKey provides FIDO2 and U2F authentication to OpenSSH, PAM sudo, and Hyprlock on Linux.</desc>
+  <style>
+    text { font-family: 'Fragment Mono', monospace; fill: #d9e4df; }
+    .small { font-size: 15px; fill: #9bb0a8; }
+    .label { font-size: 17px; }
+    .box { fill: #15201d; stroke: #78a99a; stroke-width: 2; }
+    .inner { fill: #101714; stroke: #4f7568; stroke-width: 1.5; }
+    .line { stroke: #a1c9bb; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#a1c9bb"/></marker></defs>
+  <rect width="900" height="430" fill="#0a0f0d"/>
+  <text x="40" y="42" class="label">YubiKey · hardware-backed Linux authentication</text>
+  <text x="40" y="68" class="small">FIDO2 and U2F credentials across local and remote access</text>
+  <rect x="40" y="145" width="220" height="120" rx="8" class="box"/>
+  <text x="150" y="188" text-anchor="middle" class="label">YubiKey 5C</text>
+  <text x="150" y="218" text-anchor="middle" class="small">FIDO2 · U2F</text>
+  <text x="150" y="242" text-anchor="middle" class="small">PIN · presence</text>
+  <rect x="360" y="100" width="500" height="250" rx="8" class="box"/>
+  <text x="610" y="135" text-anchor="middle" class="small">LINUX AUTHENTICATION</text>
+  <rect x="440" y="153" width="380" height="48" rx="5" class="inner"/>
+  <text x="630" y="183" text-anchor="middle" class="label">OpenSSH</text>
+  <rect x="440" y="217" width="380" height="48" rx="5" class="inner"/>
+  <text x="630" y="247" text-anchor="middle" class="label">PAM → sudo</text>
+  <rect x="440" y="281" width="380" height="48" rx="5" class="inner"/>
+  <text x="630" y="311" text-anchor="middle" class="label">Hyprlock</text>
+  <path d="M260 205H400M400 177V305" fill="none" stroke="#a1c9bb" stroke-width="2"/>
+  <path d="M400 177H440" class="line"/>
+  <path d="M400 241H440" class="line"/>
+  <path d="M400 305H440" class="line"/>
+  <text x="40" y="395" class="small">Local configuration includes recovery when the key is unavailable.</text>
+</svg>

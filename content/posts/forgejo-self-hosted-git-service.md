@@ -9,7 +9,6 @@
 }
 ---
 
-## AI Generated Writeups Imported from Chat History
 
 ## Overview
 
@@ -30,7 +29,7 @@ The deployment work included:
 - Importing existing repositories into the service.
 - Configuring repository and account access.
 - Creating personal access tokens for Git operations that require them.
-- Publishing Forgejo through a reverse proxy and domain route.
+- Publishing Forgejo through Cloudflare Tunnel at git.brogano.dev.
 - Integrating the service into my normal development workflow.
 
 When repositories were imported, I also checked author identity and contribution activity. Git records the author email in each commit, so the email configured in a repository affects how contributions are attributed in Forgejo and other Git hosting tools.
@@ -41,4 +40,4 @@ The Forgejo instance is available at [git.brogano.dev](https://git.brogano.dev).
 
 ## Result
 
-Forgejo gives me a self-hosted Git service for maintaining repositories, reviewing project history, and managing development access. The project combines Git administration with Linux service hosting, reverse-proxy configuration, repository migration, and identity management.
+Forgejo gives me a self-hosted Git service for maintaining repositories, reviewing project history, and managing development access.

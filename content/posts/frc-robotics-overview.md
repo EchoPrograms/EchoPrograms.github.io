@@ -9,7 +9,6 @@
 }
 ---
 
-## AI Generated Writeups Imported from Chat History
 
 ## Overview
 
@@ -67,7 +66,3 @@ Feedforward handles predictable behavior from the mechanism, while feedback corr
 Telemetry and visualization were important throughout the work. AdvantageKit and AdvantageScope provided ways to record and inspect system state, while the robot libraries supplied the abstractions for devices, commands, and control loops.
 
 When something did not behave as expected, the investigation could involve code, library versions, encoder configuration, wiring, motor behavior, or the physical mechanism. This made logging and clear subsystem boundaries valuable because they narrowed the problem before making another change.
-
-## Scope and status
-
-The source material describes this as active team work, but does not provide a verified project date or current season status. This page is a general overview of my reported FRC experience, not a claim about a specific robot's competition performance.

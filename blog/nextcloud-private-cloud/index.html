@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nextcloud private cloud · EchoPrograms</title><meta name="description" content="Hosting private file storage and collaboration tools with Nextcloud on local infrastructure.">
+<meta property="og:title" content="Nextcloud private cloud · EchoPrograms">
+<meta property="og:description" content="Hosting private file storage and collaboration tools with Nextcloud on local infrastructure."><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="../../feed.xml">
+<script src="../../assets/site.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
+<a class="wordmark" href="../../">EchoPrograms</a><div class="nav-links"><a href="../../">Home</a><a href="../../portfolio/">Portfolio</a><a href="../../blog/" aria-current="page">Writeups</a><a href="../../info/">Info</a><a href="https://github.com/EchoPrograms" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
+<main id="main" class="container"><article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header"><p class="import-label">AI Generated Writeups Imported from Chat History</p><p class="eyebrow">Project / <time datetime="2025-08-01">2025-08-01</time> / 1 min read</p><h1>Nextcloud private cloud</h1><p class="lede">Hosting private file storage and collaboration tools with Nextcloud on local infrastructure.</p><div class="tags"><span class="tag">Nextcloud</span><span class="tag">Linux</span><span class="tag">Cloudflare Tunnel</span><span class="tag">Self-hosting</span></div></header><div class="prose"><h2 id="overview">Overview</h2>
+<p>I deployed Nextcloud to provide private file storage and collaboration tools on my own infrastructure. The service runs on a virtual machine and is made available through Cloudflare Tunnel.</p>
+<p>The setup combines application configuration with Linux service administration, DNS, tunnel routing, and storage management. Nextcloud needs the public URL, trusted domains, and internal service route to agree with one another.</p>
+<h2 id="deployment">Deployment</h2>
+<figure class="topology-figure">
+<div class="topology-scroll" role="region" aria-label="Nextcloud deployment diagram; scroll horizontally on small screens" tabindex="0"><img src="/assets/nextcloud-deployment.svg" width="900" height="430" loading="lazy" alt="Cloudflare Tunnel forwards the Nextcloud hostname to a local Linux virtual machine."></div>
+<figcaption>Nextcloud deployment path through Cloudflare Tunnel. <a href="/assets/nextcloud-deployment.svg">Open full-size diagram</a>.</figcaption>
+</figure>
+
+<p>The deployment work included:</p>
+<ul>
+<li>Installing Nextcloud on a Linux virtual machine.</li>
+<li>Configuring the application for its domain and internal network address.</li>
+<li>Publishing the selected route through Cloudflare Tunnel.</li>
+<li>Checking the service locally before testing the public hostname.</li>
+<li>Configuring preview generation and the utilities needed for file previews.</li>
+</ul>
+<h2 id="routing-and-troubleshooting">Routing and troubleshooting</h2>
+<p>Some of the work involved separating application responses from tunnel responses. Untrusted-domain errors and HTTP 400 responses pointed to application URL configuration, while Cloudflare 522 responses required checking the path between the edge tunnel and internal service.</p>
+<p>The service could be reachable from inside the network while still failing through its hostname. Checking the trusted-domain list, DNS, and tunnel connection independently made the route easier to verify.</p>
+<p>I also investigated application warnings and preview-generation behavior separately from availability. A warning about a missing preview utility does not have the same cause as a request that cannot reach the application, so each needed its own check.</p>
+<h2 id="result">Result</h2>
+<p>Nextcloud provides a self-hosted private cloud for files and collaboration. The project demonstrates virtual-machine hosting, application URL configuration, Cloudflare Tunnel publishing, and layered web-service troubleshooting.</p></div></article></main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="../../feed.xml">Atom feed</a><a href="../../legacy/index.html">Legacy site ↗</a><a href="../../ai-use/">AI use</a><a href="https://github.com/EchoPrograms/EchoPrograms.github.io" target="_blank" rel="noopener noreferrer">Source ↗</a></div></footer></body></html>

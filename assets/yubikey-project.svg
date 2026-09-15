@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc">
+  <title id="title">YubiKey security key</title>
+  <desc id="desc">A minimal USB-C security key with a circular touch contact, drawn with muted green outlines.</desc>
+  <rect width="900" height="500" fill="#0a0f0d"/>
+  <g stroke="#78a99a" stroke-width="3">
+    <rect x="418" y="68" width="64" height="74" rx="18" fill="#243b33"/>
+    <rect x="429" y="79" width="42" height="14" rx="7" fill="#0a0f0d" stroke-width="2"/>
+    <rect x="378" y="126" width="144" height="302" rx="30" fill="#15201d"/>
+    <circle cx="450" cy="245" r="40" fill="#243b33"/>
+    <circle cx="450" cy="245" r="27" fill="none" stroke="#4f7568" stroke-width="2"/>
+    <circle cx="450" cy="393" r="12" fill="#0a0f0d" stroke-width="2"/>
+  </g>
+</svg>
