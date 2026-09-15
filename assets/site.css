@@ -102,6 +102,8 @@ p { margin-bottom: 20px; }
 .about { padding-bottom: 55px; }
 .about h2 { margin-bottom: 23px; }
 .about > p { max-width: 880px; font-size: 14px; line-height: 1.9; }
+.kieran { position: relative; display: inline-block; padding: 0; border: 0; background: none; color: #fff; font: inherit; vertical-align: baseline; }
+.kieran-heart { position: absolute; left: 50%; top: 30%; width: 10px; height: 10px; fill: #f28bb6; pointer-events: none; }
 .experience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 45px; margin-top: 30px; }
 .experience-grid h3 { font-size: 16px; margin-bottom: 12px; }
 .experience-grid p { font-size: 13px; color: var(--muted); margin-bottom: 0; }

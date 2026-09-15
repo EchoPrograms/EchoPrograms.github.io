@@ -49,6 +49,37 @@ async function loadGitHub(card) {
 
 document.querySelectorAll('[data-github]').forEach(loadGitHub);
 
+const kieran = document.querySelector('.kieran');
+if (kieran) {
+  let blush;
+  kieran.addEventListener('click', () => {
+    blush?.cancel();
+    kieran.querySelectorAll('.kieran-heart').forEach(heart => heart.remove());
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    blush = kieran.animate([{ color: '#f28bb6' }, { color: '#fff' }], {
+      duration: reducedMotion ? 400 : 1500, easing: 'ease-out'
+    });
+    if (reducedMotion) return;
+    for (const [x, y] of [[-30, -23], [-16, -38], [0, -44], [18, -34], [32, -18]]) {
+      const heart = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      heart.setAttribute('viewBox', '0 0 24 24');
+      heart.setAttribute('class', 'kieran-heart');
+      heart.setAttribute('aria-hidden', 'true');
+      heart.setAttribute('focusable', 'false');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M12 21 3 12C-3 5 6-2 12 5 18-2 27 5 21 12Z');
+      heart.append(path);
+      kieran.append(heart);
+      const animation = heart.animate([
+        { transform: 'translate(-50%, 0) scale(.5)', opacity: 0 },
+        { opacity: .9, offset: .15 },
+        { transform: `translate(calc(-50% + ${x}px), ${y}px) scale(1)`, opacity: 0 }
+      ], { duration: 950, easing: 'ease-out' });
+      animation.onfinish = () => heart.remove();
+    }
+  });
+}
+
 const postList = document.querySelector('#post-list');
 if (postList) {
   const rows = [...postList.querySelectorAll('[data-category]')];

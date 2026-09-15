@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc">
+  <title id="title">Bruce firmware Bluetooth contribution</title>
+  <desc id="desc">A muted green Bluetooth symbol inside an ESP32-style embedded device outline.</desc>
+  <rect width="900" height="500" fill="#0a0f0d"/>
+  <rect x="300" y="55" width="300" height="390" rx="18" fill="#15201d" stroke="#78a99a" stroke-width="3"/>
+  <rect x="330" y="90" width="240" height="70" rx="6" fill="#101714" stroke="#4f7568" stroke-width="2"/>
+  <text x="450" y="132" text-anchor="middle" fill="#9bb0a8" font-family="'Fragment Mono', monospace" font-size="18">BRUCE FIRMWARE</text>
+  <path d="M450 205v140M450 205l58 48-58 47 58 45-58 48M450 252l-58-47M450 300l-58 45" fill="none" stroke="#78a99a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="450" cy="392" r="12" fill="#243b33" stroke="#78a99a" stroke-width="2"/>
+</svg>

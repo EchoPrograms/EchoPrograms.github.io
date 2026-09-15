@@ -151,6 +151,17 @@
       "image": "assets/yubikey-project.svg",
       "date": "2026-08-26",
       "linkLabel": "Read writeup"
+    },
+    {
+      "title": "Bruce Firmware Open Source Contribution",
+      "category": "Open source contribution",
+      "description": "An ESP32 firmware contribution that corrected Bluetooth MAC randomization and reorganized BLE spam menu options.",
+      "path": "blog/bruce-firmware-ble-mac-fix/index.html",
+      "source": "https://github.com/BruceDevices/firmware/commit/a419ec2a7919f085e588cb320546b4220b270e91",
+      "tags": ["Open source", "C++", "ESP32", "Bluetooth"],
+      "image": "assets/bruce-ble-contribution.svg",
+      "date": "2026-01-11",
+      "linkLabel": "Read writeup"
     }
   ]
 }
