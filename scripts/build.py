@@ -50,20 +50,44 @@ def external_links_new_tab(html):
         return f'<a{attrs} target="_blank" rel="noopener noreferrer">'
     return re.sub(r'<a(\s+[^>]*href="(?:https://[^\"]+|[^\"]+\.pdf(?:#[^\"]*)?)"[^>]*)>', add_attrs, html, flags=re.IGNORECASE)
 
-def shell(title, description, content, active='', prefix='../'):
+def shell(title, description, content, active='', prefix='../', path=''):
     links = ''.join(f'<a href="{prefix}{url}"' + (' aria-current="page"' if active == label else '') + f'>{label}</a>' for label, url in [('Home', ''), ('Portfolio', 'portfolio/'), ('Writeups', 'blog/'), ('Info', 'info/')])
+    base = site['url'].rstrip('/')
+    canonical = f"{base}/{path.lstrip('/')}"
+    person = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Brogan Oberhaus",
+        "alternateName": site['handle'],
+        "url": base + "/",
+        "sameAs": [
+            f"https://github.com/{site['github']}",
+            "https://www.linkedin.com/in/brogan-oberhaus-b2056830b/"
+        ]
+    }
+    website = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Brogan Oberhaus Portfolio",
+        "url": base + "/",
+        "description": "Programming portfolio, project writeups, resume details, and cybersecurity work by Brogan Oberhaus."
+    }
     document = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} · {esc(site['handle'])}</title><meta name="description" content="{esc(description, quote=True)}">
+<meta name="keywords" content="Brogan Oberhaus, Brogan, EchoPrograms, portfolio, projects, resume, cybersecurity, software development">
 <meta property="og:title" content="{esc(title, quote=True)} · {esc(site['handle'], quote=True)}">
 <meta property="og:description" content="{esc(description, quote=True)}"><meta property="og:type" content="website"><meta property="og:site_name" content="EchoPrograms">
+<meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="{esc(canonical, quote=True)}">
 <meta name="theme-color" content="#0a0a0a"><link rel="stylesheet" href="{prefix}assets/site.css?v={asset_versions['site.css']}">
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/atom+xml" title="EchoPrograms writeups" href="{prefix}feed.xml">
+<script type="application/ld+json">{json.dumps(person, separators=(',', ':'))}</script>
+<script type="application/ld+json">{json.dumps(website, separators=(',', ':'))}</script>
 <script src="{prefix}assets/site.js?v={asset_versions['site.js']}" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="site-header"><nav class="container nav" aria-label="Main navigation">
 <a class="wordmark" href="{prefix}">EchoPrograms</a><div class="nav-links">{links}<a href="https://github.com/{esc(site['github'])}">GitHub <span aria-hidden="true">↗</span></a></div></nav></header>
-<main id="main" class="container">{content}</main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="{prefix}feed.xml">Atom feed</a><a href="{prefix}legacy/index.html">Legacy site ↗</a><a href="{prefix}ai-use/">AI use</a><a href="https://github.com/{esc(site['github'])}/EchoPrograms.github.io">Source ↗</a></div></footer></body></html>'''
+<main id="main" class="container">{content}</main><footer class="container footer"><span>Brogan / EchoPrograms</span><div><a href="{prefix}feed.xml">Atom feed</a><a href="{prefix}legacy/index.html" rel="nofollow">Legacy site ↗</a><a href="{prefix}ai-use/">AI use</a><a href="https://github.com/{esc(site['github'])}/EchoPrograms.github.io">Source ↗</a></div></footer></body></html>'''
     return external_links_new_tab(document)
 
 def art(kind):
@@ -166,28 +190,28 @@ home = f'''<section class="hero" aria-labelledby="intro-title">
 <div><h3>Robotics</h3><p>My FRC experience includes Java and WPILib, swerve drive, autonomous path planning, vision-assisted localization, and PID and feedforward control.</p></div>
 <div><h3>Embedded systems</h3><p>I've worked with ESP32 development, PlatformIO, servos, sensors, and GPIO. My interests include integrating firmware with mechanical and electronic hardware.</p></div>
 </div></section>'''
-(ROOT / 'index.html').write_text(shell('Portfolio & writeups', 'Brogan’s programming portfolio, project notes, and CTF writeups. JavaScript experiments, systems, and security.', home, 'Home', './'))
-portfolio = f'''<section class="page-intro"><h1>Projects</h1><p>Software, infrastructure, and security projects, with demos and technical writeups.</p></section><div class="project-grid portfolio-grid">{''.join(card(p,'../') for p in site['projects'])}</div><p class="archive-note"><a class="text-link" href="../legacy/Html/projects.html">Older projects are in the legacy archive →</a></p>'''
-(ROOT / 'portfolio/index.html').write_text(shell('Portfolio', 'Software, infrastructure, and security projects by Brogan Oberhaus.', portfolio, 'Portfolio'))
+(ROOT / 'index.html').write_text(shell('Portfolio & writeups', 'Brogan’s programming portfolio, project notes, and CTF writeups. JavaScript experiments, systems, and security.', home, 'Home', './', ''))
+portfolio = f'''<section class="page-intro"><h1>Projects</h1><p>Software, infrastructure, and security projects, with demos and technical writeups.</p></section><div class="project-grid portfolio-grid">{''.join(card(p,'../') for p in site['projects'])}</div><p class="archive-note"><a class="text-link" href="../legacy/Html/projects.html" rel="nofollow">Older projects are in the legacy archive →</a></p>'''
+(ROOT / 'portfolio/index.html').write_text(shell('Portfolio', 'Software, infrastructure, and security projects by Brogan Oberhaus.', portfolio, 'Portfolio', path='portfolio/'))
 blog = f'''<section class="page-intro"><h1>Writeups</h1><p>Project documentation, CTF walkthroughs, and technical notes.</p></section><div class="blog-tools" hidden><div class="filters" role="group" aria-label="Filter writeups">{''.join(f'<button type="button" data-filter="{x}" aria-pressed="{str(x == "All").lower()}">{x}</button>' for x in ['All','Project','CTF','Notes'])}</div><label class="search"><span class="sr-only">Search writeups</span><input type="search" id="post-search" placeholder="Search writeups…"></label></div><div id="post-list">{''.join(post_row(p,'../') for p in posts) or empty}</div><p id="filter-status" class="status" role="status"></p><div id="no-results" class="empty-state" hidden><h2>No matching writeups.</h2><p>Try another search or category.</p></div>'''
-(ROOT / 'blog/index.html').write_text(shell('Writeups', 'Project documentation, CTF walkthroughs, and technical notes by Brogan.', blog, 'Writeups'))
+(ROOT / 'blog/index.html').write_text(shell('Writeups', 'Project documentation, CTF walkthroughs, and technical notes by Brogan.', blog, 'Writeups', path='blog/'))
 for p in posts:
     directory = ROOT / 'blog' / p['slug']
     directory.mkdir(exist_ok=True)
     imported = '<p class="import-label">AI Generated Writeups Imported from Chat History</p>' if p.get('imported') else ''
     article = f'''<article class="article"><a class="text-link" href="../">← All writeups</a><header class="article-header">{imported}<p class="eyebrow">{esc(p['category'])} / <time datetime="{p['date']}">{p['date']}</time> / {p['minutes']} min read</p><h1>{esc(p['title'])}</h1><p class="lede">{esc(p['summary'])}</p><div class="tags">{tags(p['tags'])}</div></header><div class="prose">{p['html']}</div></article>'''
-    (directory / 'index.html').write_text(shell(p['title'], p['summary'], article, 'Writeups', '../../'))
+    (directory / 'index.html').write_text(shell(p['title'], p['summary'], article, 'Writeups', '../../', f"blog/{p['slug']}/"))
 # Informational page: authored in Markdown and included in the static artifact.
 ai_page = ROOT / 'ai-use'
 ai_page.mkdir(exist_ok=True)
 ai_body = markdown.markdown((ROOT / 'content/pages/ai-use.md').read_text(), extensions=['fenced_code', 'tables'])
 (ai_page / 'index.html').write_text(shell('AI use', 'How AI was used in the design, code, content, and testing of this website.',
-    f'<article class="article"><header class="article-header"><h1>AI use</h1></header><div class="prose">{ai_body}</div></article>'))
+    f'<article class="article"><header class="article-header"><h1>AI use</h1></header><div class="prose">{ai_body}</div></article>', path='ai-use/'))
 info_page = ROOT / 'info'
 info_page.mkdir(exist_ok=True)
 info_body = markdown.markdown((ROOT / 'content/pages/info.md').read_text(), extensions=['fenced_code', 'tables'])
 (info_page / 'index.html').write_text(shell('Info', 'How I approach learning, projects, and AI-assisted work on this site.',
-    f'<article class="article"><header class="article-header"><h1>Info</h1></header><div class="prose">{info_body}</div></article>', 'Info'))
+    f'<article class="article"><header class="article-header"><h1>Info</h1></header><div class="prose">{info_body}</div></article>', 'Info', path='info/'))
 # Generate feed and sitemap from published content only.
 atom = 'http://www.w3.org/2005/Atom'
 ET.register_namespace('', atom)
@@ -215,4 +239,14 @@ root = ET.Element('urlset', xmlns=ns)
 for path in ['', 'portfolio/', 'blog/', 'info/', 'ai-use/', *['blog/'+p['slug']+'/' for p in posts], *[quote(p['path']) for p in site['projects'] if not p['path'].startswith('https://')]]:
     ET.SubElement(ET.SubElement(root,'url'),'loc').text = base+'/'+path
 ET.ElementTree(root).write(ROOT/'sitemap.xml', encoding='utf-8', xml_declaration=True)
+robots = f'''User-agent: *
+Allow: /
+Disallow: /legacy/
+Disallow: /Html/
+Disallow: /Stylesheets/
+Disallow: /Resources/
+
+Sitemap: {base}/sitemap.xml
+'''
+(ROOT / 'robots.txt').write_text(robots)
 print(f'Built homepage, portfolio, blog, {len(posts)} writeups, feed, and sitemap.')

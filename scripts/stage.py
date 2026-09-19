@@ -5,7 +5,7 @@ import re
 import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
-PUBLIC_FILES = ('index.html', 'feed.xml', 'sitemap.xml')
+PUBLIC_FILES = ('index.html', 'feed.xml', 'sitemap.xml', 'robots.txt')
 PUBLIC_DIRS = ('assets', 'blog', 'portfolio', 'info', 'ai-use', 'legacy', 'Projects', 'Resources', 'Html', 'Stylesheets', '404')
 # Include original demo assets and saved network data, but not authoring documents.
 PUBLIC_SUFFIXES = {'', '.html', '.css', '.js', '.json', '.xml', '.svg', '.png', '.jpg', '.jpeg', '.gif', '.ico', '.webp', '.avif', '.woff', '.woff2', '.ttf', '.otf', '.txt', '.zip', '.mhtml', '.pdf'}

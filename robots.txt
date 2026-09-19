@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /legacy/
+Disallow: /Html/
+Disallow: /Stylesheets/
+Disallow: /Resources/
+
+Sitemap: https://brogano.dev/sitemap.xml
